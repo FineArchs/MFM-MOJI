@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -11,8 +11,8 @@ jobs:
   lint-css:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.6.0
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4.0.1
       - uses: actions/cache@v3
         id: cache
         with:
@@ -25,8 +25,8 @@ jobs:
   lint-js:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.6.0
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4.0.1
       - uses: actions/cache@v3
         id: cache
         with:
@@ -39,8 +39,8 @@ jobs:
   e2e-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.6.0
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4.0.1
       - uses: actions/cache@v3
         id: cache
         with:
@@ -54,8 +54,8 @@ jobs:
   build-storybook:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.6.0
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4.0.1
       - uses: actions/cache@v3
         id: cache
         with:
@@ -64,7 +64,7 @@ jobs:
       - run: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
       - run: npm run build-storybook
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: storybook
           path: dist/storybook
@@ -72,8 +72,8 @@ jobs:
   build-app:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.6.0
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4.0.1
       - uses: actions/cache@v3
         id: cache
         with:
@@ -85,7 +85,7 @@ jobs:
         env:
           ROLLBAR_TOKEN: ${{ secrets.ROLLBAR_TOKEN }}
           GA4_TOKEN: ${{ secrets.GA4_TOKEN }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: app
           path: dist
@@ -99,15 +99,15 @@ jobs:
       - build-app
       - build-storybook
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: app
           path: dist
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: storybook
           path: dist/storybook
-      - uses: peaceiris/actions-gh-pages@v3.9.2
+      - uses: peaceiris/actions-gh-pages@v3.9.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist

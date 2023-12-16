@@ -7,10 +7,7 @@ module.exports = {
       webpack: { config: "webpack.config.js" },
     },
   },
-  extends: [
-    "airbnb-base",
-    "plugin:compat/recommended",
-  ],
+  extends: ["airbnb-base", "plugin:compat/recommended", "plugin:storybook/recommended"],
   rules: {
     // basic style modifications
     indent: ["error", 2, { SwitchCase: 1 }],
@@ -139,6 +136,12 @@ module.exports = {
 
         // allow multiple attrs per line
         "vue/max-attributes-per-line": "off",
+
+        // allow use of reserved component names
+        "vue/no-reserved-component-names": "off",
+
+        // allow use of single-word component names
+        "vue/multi-word-component-names": "off",
       },
     },
   ],

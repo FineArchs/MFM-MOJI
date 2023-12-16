@@ -2,12 +2,11 @@ module.exports = {
   stories: [
     "../src/components/**/*.stories.js",
   ],
+
   addons: [
     "@storybook/addon-essentials",
   ],
-  core: {
-    builder: "webpack5",
-  },
+
   webpackFinal: (config) => {
     config.module.rules.push({
       test: /\.glsl$/,
@@ -18,4 +17,13 @@ module.exports = {
     });
     return config;
   },
+
+  framework: {
+    name: "@storybook/vue3-webpack5",
+    options: {}
+  },
+
+  docs: {
+    autodocs: true
+  }
 }
