@@ -38,7 +38,7 @@
     "@types/color-convert": "^2.0.0",
     "@types/css-font-loading-module": "^0.0.12",
     "@types/file-saver": "^2.0.3",
-    "@types/google.analytics": "^0.0.42",
+    "@types/google.analytics": "^0.0.45",
     "@typescript-eslint/eslint-plugin": "^4.28.4",
     "@typescript-eslint/parser": "^4.33.0",
     "@vue/compiler-sfc": "^3.1.4",
