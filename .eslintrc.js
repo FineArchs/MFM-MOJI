@@ -139,6 +139,12 @@ module.exports = {
 
         // allow multiple attrs per line
         "vue/max-attributes-per-line": "off",
+
+        // allow use of reserved component names
+        "vue/no-reserved-component-names": "off",
+
+        // allow use of single-word component names
+        "vue/multi-word-component-names": "off",
       },
     },
   ],
