@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "CODE_VERSION=\"$(git rev-parse HEAD)\" webpack --mode production",
-    "build-storybook": "build-storybook -o dist/storybook",
+    "build-storybook": "storybook build -o dist/storybook",
     "start": "CODE_VERSION=\"$(git rev-parse HEAD)\" webpack serve --mode development",
     "lint": "npm run lint:css && npm run lint:js",
     "lint:css": "stylelint '**/*.{css,vue}'",
@@ -11,7 +11,7 @@
     "fix:js": "eslint --fix '**/*.{js,ts,vue}'",
     "test": "npm run test:e2e",
     "test:e2e": "playwright test",
-    "storybook": "start-storybook -p 6006"
+    "storybook": "storybook dev -p 6006"
   },
   "browserslist": [
     ">1% in JP",
@@ -32,9 +32,9 @@
     "@primer/css": "21.x",
     "@primer/stylelint-config": "^12.9.1",
     "@storybook/addon-essentials": "^7.6.6",
-    "@storybook/builder-webpack5": "^7.6.6",
-    "@storybook/manager-webpack5": "^6.3.5",
+    "@storybook/cli": "^7.6.6",
     "@storybook/vue3": "^7.6.6",
+    "@storybook/vue3-webpack5": "^7.6.6",
     "@types/color-convert": "^2.0.0",
     "@types/css-font-loading-module": "^0.0.12",
     "@types/file-saver": "^2.0.3",
@@ -50,11 +50,13 @@
     "eslint-import-resolver-webpack": "^0.13.1",
     "eslint-plugin-compat": "^4.0.0",
     "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-vue": "^9.19.2",
     "postcss": "8.x",
     "postcss-html": "1.x",
     "ssim.js": "^3.5.0",
-    "stylelint": "^15.0.0",
+    "storybook": "^7.6.6",
+    "stylelint": "^15.11.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-no-unsupported-browser-features": "^7.0.0",
     "ts-loader": "^9.2.5",

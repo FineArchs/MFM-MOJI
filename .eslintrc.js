@@ -7,10 +7,7 @@ module.exports = {
       webpack: { config: "webpack.config.js" },
     },
   },
-  extends: [
-    "airbnb-base",
-    "plugin:compat/recommended",
-  ],
+  extends: ["airbnb-base", "plugin:compat/recommended", "plugin:storybook/recommended"],
   rules: {
     // basic style modifications
     indent: ["error", 2, { SwitchCase: 1 }],
