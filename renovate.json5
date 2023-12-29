@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  dependencyDashboard: true,
+  prConcurrentLimit: 0,
+  configMigration: true,
+  extends: [
+    "group:allNonMajor",
+  ],
+  packageRules: [
+    {
+      major: true,
+      separateMultipleMajor: true,
+      packageRules: [
+        {
+          groupName: "stylelint",
+          matchDepNames: "stylelint",
+        },
+      ],
+    },
+  ],
+}
