@@ -3,8 +3,10 @@
   dependencyDashboard: true,
   prConcurrentLimit: 0,
   configMigration: true,
-  packageRules: [
+  extends: [
     "group:allNonMajor",
+  ],
+  packageRules: [
     {
       major: true,
       separateMultipleMajor: true,
