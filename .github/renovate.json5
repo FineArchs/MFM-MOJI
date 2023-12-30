@@ -3,6 +3,7 @@
   dependencyDashboard: true,
   prConcurrentLimit: 0,
   configMigration: true,
+  separateMultipleMajor: true,
   extends: [
     'group:allNonMajor',
   ],
@@ -11,7 +12,6 @@
       major: {
         enabled: true,
       },
-      separateMultipleMajor: true,
       groupName: 'stylelint',
       matchDepNames: 'stylelint',
     },
