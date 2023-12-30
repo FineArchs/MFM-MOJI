@@ -41,7 +41,6 @@
     "@types/google.analytics": "^0.0.45",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
-    "@vue/compiler-sfc": "^3.1.4",
     "canvas": "npm:@napi-rs/canvas@^0.1.44",
     "chromatic": "^10.2.0",
     "copy-webpack-plugin": "^11.0.0",
