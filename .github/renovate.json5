@@ -3,7 +3,7 @@
   dependencyDashboard: true,
   prConcurrentLimit: 0,
   configMigration: true,
-  separateMultipleMajor: true,
+  // separateMultipleMajor: true,
   extends: [
     'group:allNonMajor',
   ],
