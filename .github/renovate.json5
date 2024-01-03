@@ -13,7 +13,7 @@
         enabled: true,
       },
       groupName: 'stylelint',
-      matchDepNames: 'stylelint',
+      matchPackagePatterns: '.*stylelint.*',
     },
   ],
 }
