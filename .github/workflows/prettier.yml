@@ -34,4 +34,6 @@ jobs:
           if [ "$PRS" == '[]' ]
           then
             gh pr create --base $BASE_BRANCH --fill --label bot
+          else
+            echo "$PRS"
           fi
