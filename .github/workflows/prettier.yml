@@ -31,7 +31,7 @@ jobs:
           git branch -m $HEAD_BRANCH
           git push -f -u origin $HEAD_BRANCH
           PRS=$(gh pr list --json id -head $HEAD_BRANCH -s open)
-          if [ $PRS == '[]' ]
+          if [ "$PRS" == '[]' ]
           then
             gh pr create --base $BASE_BRANCH --fill --label bot
           fi
