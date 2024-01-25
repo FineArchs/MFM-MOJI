@@ -3,10 +3,10 @@ import { defineComponent, PropType } from "vue";
 import { elementIsContained } from "../../utils/dom";
 
 type Pos = {
-  left?: string,
-  right?: string,
-  top?: string,
-  bottom?: string,
+  left?: string;
+  right?: string;
+  top?: string;
+  bottom?: string;
 };
 
 export default defineComponent({
@@ -34,12 +34,19 @@ export default defineComponent({
         if (this.show) {
           this.refreshStyle();
           this.hideHandler = (e: PointerEvent): void => {
-            if (!elementIsContained(e.target as Element, this.$refs.popover as Element)) {
+            if (
+              !elementIsContained(
+                e.target as Element,
+                this.$refs.popover as Element,
+              )
+            ) {
               this.onHide();
             }
           };
           window.addEventListener("pointerdown", this.hideHandler, true);
-          window.addEventListener("scroll", this.refreshStyle, { passive: true });
+          window.addEventListener("scroll", this.refreshStyle, {
+            passive: true,
+          });
           window.addEventListener("resize", this.refreshStyle);
         } else if (this.hideHandler) {
           window.removeEventListener("pointerdown", this.hideHandler, true);
@@ -61,7 +68,8 @@ export default defineComponent({
     if (this.show) {
       const rect = (this.$refs.popover as Element).getBoundingClientRect();
       const left = rect.left + window.scrollX;
-      const right = document.documentElement.clientWidth - (rect.right + window.scrollX);
+      const right =
+        document.documentElement.clientWidth - (rect.right + window.scrollX);
       if (left < 0) {
         this.pos.left = "0";
         delete this.pos.right;
@@ -98,7 +106,12 @@ export default defineComponent({
 
 <template>
   <teleport to="body">
-    <div v-if="show" ref="popover" class="popover" :style="{ ...style, ...pos }">
+    <div
+      v-if="show"
+      ref="popover"
+      class="popover"
+      :style="{ ...style, ...pos }"
+    >
       <slot />
     </div>
   </teleport>

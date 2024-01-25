@@ -31,7 +31,8 @@ export default [
       { label: "BLINK", value: effectBlink },
       { label: "直球", value: effectStraight },
     ],
-  }, {
+  },
+  {
     label: "シャドウ",
     effects: [
       { label: "ぐるぐる", value: effectShadowRotate },

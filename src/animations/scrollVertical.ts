@@ -11,7 +11,7 @@ const animationScrollVertical: Animation = (
   cellWidth,
   cellHeight,
 ) => {
-  const kf = 1 - (keyframe + 0.5) % 1;
+  const kf = 1 - ((keyframe + 0.5) % 1);
   ctx.drawImage(
     image,
     offsetH,
@@ -19,7 +19,7 @@ const animationScrollVertical: Animation = (
     width,
     height,
     cellWidth / 4,
-    -cellHeight / 2 * kf,
+    (-cellHeight / 2) * kf,
     cellWidth / 2,
     cellHeight / 2,
   );
@@ -30,7 +30,7 @@ const animationScrollVertical: Animation = (
     width,
     height,
     cellWidth / 4,
-    cellHeight / 2 - cellHeight / 2 * kf,
+    cellHeight / 2 - (cellHeight / 2) * kf,
     cellWidth / 2,
     cellHeight / 2,
   );
@@ -41,7 +41,7 @@ const animationScrollVertical: Animation = (
     width,
     height,
     cellWidth / 4,
-    cellHeight - cellHeight / 2 * kf,
+    cellHeight - (cellHeight / 2) * kf,
     cellWidth / 2,
     cellHeight / 2,
   );

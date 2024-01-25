@@ -35,10 +35,10 @@ import {
 
 import { NODE_ENV } from "../../utils/env";
 
-type AnimationOption = { label: string, value: Animation };
-type EffectOption = { label: string, value: Effect };
-type WebGLEffectOption = { label: string, value: WebGLEffect };
-type SpeedOption = { label: string, value: number };
+type AnimationOption = { label: string; value: Animation };
+type EffectOption = { label: string; value: Effect };
+type WebGLEffectOption = { label: string; value: WebGLEffect };
+type SpeedOption = { label: string; value: number };
 
 const TRIMMING_OPTIONS = [
   { label: "ぴっちり", value: "" },
@@ -72,14 +72,14 @@ export default defineComponent({
     DevTool,
   },
   props: {
-    baseImage: { type: Object as PropType<HTMLImageElement | HTMLCanvasElement>, default: null },
+    baseImage: {
+      type: Object as PropType<HTMLImageElement | HTMLCanvasElement>,
+      default: null,
+    },
     show: { type: Boolean, required: true },
     emojiSize: { type: Number, default: null },
   },
-  emits: [
-    "render",
-    "update:emojiSize",
-  ],
+  emits: ["render", "update:emojiSize"],
   data() {
     return {
       animations,
@@ -97,7 +97,7 @@ export default defineComponent({
         targetAspect: 1,
         speed: SPEED_OPTIONS[2],
         cells: [1, 1],
-        animation: null as (AnimationOption | null),
+        animation: null as AnimationOption | null,
         animationInvert: false,
         staticEffects: [] as EffectOption[],
         effects: [] as EffectOption[],
@@ -120,7 +120,10 @@ export default defineComponent({
   },
   computed: {
     naturalAspect(): number {
-      return (this.conf.trimH[1] - this.conf.trimH[0]) / (this.conf.trimV[1] - this.conf.trimV[0]);
+      return (
+        (this.conf.trimH[1] - this.conf.trimH[0]) /
+        (this.conf.trimV[1] - this.conf.trimV[0])
+      );
     },
   },
   watch: {
@@ -141,7 +144,9 @@ export default defineComponent({
     },
     conf: {
       handler(): void {
-        const animationName = this.conf.animation ? this.conf.animation.label : "";
+        const animationName = this.conf.animation
+          ? this.conf.animation.label
+          : "";
         const effectNames = [
           ...this.conf.staticEffects.map((e) => e.label),
           ...this.conf.effects.map((e) => e.label),
@@ -167,8 +172,12 @@ export default defineComponent({
     refreshDefaultSettings(): void {
       if (this.baseImage) {
         const image = this.baseImage;
-        const height = image instanceof HTMLImageElement ? image.naturalHeight : image.height;
-        const width = image instanceof HTMLImageElement ? image.naturalWidth : image.width;
+        const height =
+          image instanceof HTMLImageElement
+            ? image.naturalHeight
+            : image.height;
+        const width =
+          image instanceof HTMLImageElement ? image.naturalWidth : image.width;
         const hCells = this.conf.cells[0];
         const vCells = this.conf.cells[1];
         let widthPerCell = width / hCells;
@@ -186,11 +195,8 @@ export default defineComponent({
         const offsetH = Math.floor((width - widthPerCell * hCells) / 2);
         const offsetV = Math.floor((height - heightPerCell * vCells) / 2);
         this.conf.trimH = [offsetH, width - offsetH];
-        this.conf.trimV = offsetV < 0 ? (
-          [offsetV, height - offsetV]
-        ) : (
-          [0, height - offsetV * 2]
-        );
+        this.conf.trimV =
+          offsetV < 0 ? [offsetV, height - offsetV] : [0, height - offsetV * 2];
         this.conf.targetAspect = aspect;
       }
     },
@@ -214,15 +220,19 @@ export default defineComponent({
       this.dirty = false;
       if (this.baseImage) {
         const animated = !!(
-          this.conf.animation
-          || this.conf.effects.length
-          || this.conf.webglEffects.length
+          this.conf.animation ||
+          this.conf.effects.length ||
+          this.conf.webglEffects.length
         );
 
-        const framerate = Math.min(FRAMERATE_MAX, Math.ceil(FRAMECOUNT_MAX / this.conf.duration));
+        const framerate = Math.min(
+          FRAMERATE_MAX,
+          Math.ceil(FRAMECOUNT_MAX / this.conf.duration),
+        );
         const framecount = Math.floor(this.conf.duration * framerate);
 
-        const maxSize = this.emojiSize || (animated ? ANIMATED_EMOJI_SIZE : EMOJI_SIZE);
+        const maxSize =
+          this.emojiSize || (animated ? ANIMATED_EMOJI_SIZE : EMOJI_SIZE);
         const aspectCoef = Math.sqrt(this.conf.targetAspect);
         const binarySizeLimit = this.emojiSize ? Infinity : BINARY_SIZE_LIMIT;
         renderAllCells(
@@ -239,7 +249,9 @@ export default defineComponent({
           animated,
           this.conf.animation ? this.conf.animation.value : null,
           this.conf.animationInvert,
-          this.conf.effects.concat(this.conf.staticEffects).map((eff) => eff.value),
+          this.conf.effects
+            .concat(this.conf.staticEffects)
+            .map((eff) => eff.value),
           this.conf.webglEffects.map((eff) => eff.value),
           this.conf.easing.value,
           framerate,
@@ -260,15 +272,24 @@ export default defineComponent({
 
 <template>
   <Card v-if="show">
-    <Grid v-if="!devMode" :columns="[[450, 1], [Infinity, 2]]" spaced>
+    <Grid
+      v-if="!devMode"
+      :columns="[
+        [450, 1],
+        [Infinity, 2],
+      ]"
+      spaced
+    >
       <GridItem>
         <Space vertical xlarge full>
           <Fieldset label="アニメーション">
             <Space vertical full>
               <Select
-                  v-model="conf.animation"
-                  name="アニメーション"
-                  nullable :options="animations" />
+                v-model="conf.animation"
+                name="アニメーション"
+                nullable
+                :options="animations"
+              />
               <Checkbox v-model="conf.animationInvert" name="逆再生">
                 {{ "逆再生" }}
               </Checkbox>
@@ -276,27 +297,36 @@ export default defineComponent({
           </Fieldset>
           <EffectBlock v-model="conf.webglEffects" :effects="webgleffects" />
           <EffectBlock v-model="conf.effects" :effects="effects" />
-          <EffectBlock v-if="showDetails" v-model="conf.effects" :effects="bgeffects" />
+          <EffectBlock
+            v-if="showDetails"
+            v-model="conf.effects"
+            :effects="bgeffects"
+          />
           <Fieldset v-if="showDetails" label="画像サイズ">
             <Space vertical full>
               <Checkbox
-                  :model-value="emojiSize === null"
-                  name="画像サイズ自動"
-                  @update:model-value="toggleAutoSize">
+                :model-value="emojiSize === null"
+                name="画像サイズ自動"
+                @update:model-value="toggleAutoSize"
+              >
                 自動
               </Checkbox>
               <Number
-                  v-if="emojiSize !== null"
-                  :model-value="emojiSize"
-                  :min="1"
-                  @update:model-value="changeEmojiSize" />
+                v-if="emojiSize !== null"
+                :model-value="emojiSize"
+                :min="1"
+                @update:model-value="changeEmojiSize"
+              />
             </Space>
           </Fieldset>
           <Fieldset v-if="showDetails && isDev" label="開発者向け">
-            <Button danger type="text" name="開発者モード" @click="devMode = true">
-              <template #icon>
-                🔨
-              </template>
+            <Button
+              danger
+              type="text"
+              name="開発者モード"
+              @click="devMode = true"
+            >
+              <template #icon> 🔨 </template>
               開発者モード
             </Button>
           </Fieldset>
@@ -306,69 +336,81 @@ export default defineComponent({
         <Space vertical xlarge full>
           <Fieldset v-if="!showDetails" label="切り抜き">
             <Select
-                v-model="conf.trimming"
-                name="切り抜き"
-                :options="TRIMMING_OPTIONS"
-                @update:model-value="refreshDefaultSettings" />
+              v-model="conf.trimming"
+              name="切り抜き"
+              :options="TRIMMING_OPTIONS"
+              @update:model-value="refreshDefaultSettings"
+            />
           </Fieldset>
           <CellcountBlock
-              v-if="showDetails"
-              v-model="conf.cells"
-              @update:model-value="refreshDefaultSettings" />
+            v-if="showDetails"
+            v-model="conf.cells"
+            @update:model-value="refreshDefaultSettings"
+          />
           <Fieldset v-if="showDetails" label="トリミング (横)">
             <Slider
-                v-model="conf.trimH"
-                block
-                nonzero
-                :marks="[0, baseImage.width]"
-                :min="baseImage ? - Math.floor(baseImage.width * 0.5) : 0"
-                :max="baseImage ? Math.ceil(baseImage.width * 1.5) : 0" />
+              v-model="conf.trimH"
+              block
+              nonzero
+              :marks="[0, baseImage.width]"
+              :min="baseImage ? -Math.floor(baseImage.width * 0.5) : 0"
+              :max="baseImage ? Math.ceil(baseImage.width * 1.5) : 0"
+            />
           </Fieldset>
           <Fieldset v-if="showDetails" label="トリミング (縦)">
             <Slider
-                v-model="conf.trimV"
-                block
-                nonzero
-                :marks="[0, baseImage.height]"
-                :min="baseImage ? - Math.floor(baseImage.height * 0.5) : 0"
-                :max="baseImage ? Math.ceil(baseImage.height * 1.5) : 0" />
+              v-model="conf.trimV"
+              block
+              nonzero
+              :marks="[0, baseImage.height]"
+              :min="baseImage ? -Math.floor(baseImage.height * 0.5) : 0"
+              :max="baseImage ? Math.ceil(baseImage.height * 1.5) : 0"
+            />
           </Fieldset>
           <Fieldset v-if="showDetails" label="アス比">
             <Slider
-                v-model="conf.targetAspect"
-                block
-                nonzero
-                :step="0.01"
-                :marks="[1, naturalAspect]"
-                :min="Math.min(0.2, naturalAspect)"
-                :max="Math.max(5, naturalAspect)" />
+              v-model="conf.targetAspect"
+              block
+              nonzero
+              :step="0.01"
+              :marks="[1, naturalAspect]"
+              :min="Math.min(0.2, naturalAspect)"
+              :max="Math.max(5, naturalAspect)"
+            />
           </Fieldset>
           <EffectBlock v-model="conf.staticEffects" :effects="staticeffects" />
           <Fieldset v-if="!showDetails" label="速度 (アニメ)">
             <Select
-                v-model="conf.speed"
-                name="速度(アニメ)"
-                :options="SPEED_OPTIONS"
-                @update:model-value="selectSpeed($event)" />
+              v-model="conf.speed"
+              name="速度(アニメ)"
+              :options="SPEED_OPTIONS"
+              @update:model-value="selectSpeed($event)"
+            />
           </Fieldset>
           <Fieldset v-if="showDetails" label="長さ (アニメ)">
             <Slider
-                v-model="conf.duration"
-                block
-                :min="0.1"
-                :step="0.1"
-                :max="2.0" />
+              v-model="conf.duration"
+              block
+              :min="0.1"
+              :step="0.1"
+              :max="2.0"
+            />
           </Fieldset>
           <Fieldset v-if="showDetails" label="イージング (アニメ)">
-            <Select v-model="conf.easing" name="イージング" :options="easings" />
+            <Select
+              v-model="conf.easing"
+              name="イージング"
+              :options="easings"
+            />
           </Fieldset>
           <Fieldset label="背景色">
             <Space vertical full>
               <Color
-                  v-model="conf.backgroundColor"
-                  name="背景色"
-                  block
-                  @update:model-value="conf.transparent = false" />
+                v-model="conf.backgroundColor"
+                name="背景色"
+                block
+                @update:model-value="conf.transparent = false"
+              />
               <Checkbox v-model="conf.transparent" name="背景色(透過)">
                 {{ "透過 (アニメ gif は非推奨)" }}
               </Checkbox>
@@ -383,12 +425,13 @@ export default defineComponent({
       </Checkbox>
     </template>
     <DevTool
-        v-if="devMode"
-        v-model:no-crop="conf.noCrop"
-        :show="show && devMode"
-        @close="devMode = false"
-        @build-animation="conf.animation = $event"
-        @build-effect="conf.effects = [$event]"
-        @build-shader="conf.webglEffects = [$event]" />
+      v-if="devMode"
+      v-model:no-crop="conf.noCrop"
+      :show="show && devMode"
+      @close="devMode = false"
+      @build-animation="conf.animation = $event"
+      @build-effect="conf.effects = [$event]"
+      @build-shader="conf.webglEffects = [$event]"
+    />
   </Card>
 </template>

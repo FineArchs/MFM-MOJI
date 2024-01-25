@@ -8,7 +8,8 @@ export default {
 const Template = (args) => ({
   components: { FontSelectBlock },
   data: () => args,
-  template: "<FontSelectBlock :model-value='modelValue' :show-details='showDetails' />",
+  template:
+    "<FontSelectBlock :model-value='modelValue' :show-details='showDetails' />",
 });
 
 export const Basic = Template.bind({});

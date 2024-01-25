@@ -2,9 +2,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  inject: [
-    "numColumns",
-  ],
+  inject: ["numColumns"],
   props: {
     span: { type: Number, default: 1 },
   },

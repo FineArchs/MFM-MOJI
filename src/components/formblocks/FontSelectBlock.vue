@@ -14,15 +14,16 @@ const validateFont = (font: string): boolean => {
 
 export default defineComponent({
   components: {
-    Checkbox, Input, Space, Fieldset,
+    Checkbox,
+    Input,
+    Space,
+    Fieldset,
   },
   props: {
     modelValue: { type: String, required: true },
     showDetails: { type: Boolean, required: true },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   data: (props) => ({
     fonts,
     stringValue: props.modelValue,
@@ -49,21 +50,33 @@ export default defineComponent({
 
 <template>
   <Space vertical xlarge full>
-    <Fieldset v-for="category in fonts" :key="category.label" :label="category.label">
+    <Fieldset
+      v-for="category in fonts"
+      :key="category.label"
+      :label="category.label"
+    >
       <Space vertical>
         <Checkbox
-            v-for="font in category.fonts"
-            :key="font.label"
-            :name="font.label"
-            :model-value="modelValue"
-            :value="font.value"
-            @update:model-value="$emit('update:modelValue', $event)">
-          <span :style="{ font: font.value, lineHeight: 1 }">{{ font.label }}</span>
+          v-for="font in category.fonts"
+          :key="font.label"
+          :name="font.label"
+          :model-value="modelValue"
+          :value="font.value"
+          @update:model-value="$emit('update:modelValue', $event)"
+        >
+          <span :style="{ font: font.value, lineHeight: 1 }">{{
+            font.label
+          }}</span>
         </Checkbox>
       </Space>
     </Fieldset>
     <Fieldset v-if="showDetails" label="その他のフォント">
-      <Input v-model="stringValue" name="その他のフォント" block :error="!stringIsValid" />
+      <Input
+        v-model="stringValue"
+        name="その他のフォント"
+        block
+        :error="!stringIsValid"
+      />
     </Fieldset>
   </Space>
 </template>

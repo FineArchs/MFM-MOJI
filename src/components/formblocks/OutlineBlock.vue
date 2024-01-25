@@ -8,20 +8,23 @@ import Space from "../global/Space.vue";
 import OutlineItemBlock from "./OutlineItemBlock.vue";
 import { absColor } from "../../utils/color";
 
-type OutlineOption = { value: string, absColor: string };
+type OutlineOption = { value: string; absColor: string };
 
 export default defineComponent({
   components: {
-    ToggleButton, ColorSample, OutlineItemBlock, Fieldset, Button, Space,
+    ToggleButton,
+    ColorSample,
+    OutlineItemBlock,
+    Fieldset,
+    Button,
+    Space,
   },
   props: {
     modelValue: { type: Array as PropType<string[]>, required: true },
     baseColor: { type: String, required: true },
     showDetails: { type: Boolean, required: true },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   computed: {
     options(): OutlineOption[] {
       return [
@@ -36,15 +39,19 @@ export default defineComponent({
   },
   methods: {
     update(ix: number, value: string): void {
-      this.$emit("update:modelValue", this.modelValue.map((origVal, i) => (
-        ix === i ? value : origVal
-      )));
+      this.$emit(
+        "update:modelValue",
+        this.modelValue.map((origVal, i) => (ix === i ? value : origVal)),
+      );
     },
     add(): void {
       this.$emit("update:modelValue", [...this.modelValue, "identical"]);
     },
     remove(ix: number): void {
-      this.$emit("update:modelValue", this.modelValue.filter((_, i) => i !== ix));
+      this.$emit(
+        "update:modelValue",
+        this.modelValue.filter((_, i) => i !== ix),
+      );
     },
   },
 });
@@ -54,13 +61,14 @@ export default defineComponent({
   <Fieldset v-if="!showDetails" label="アウトライン">
     <Space small>
       <ToggleButton
-          v-for="option in options"
-          :key="option.value"
-          name="アウトライン"
-          :model-value="modelValue"
-          size="smallIcon"
-          :value="option.value"
-          @update:model-value="$emit('update:modelValue', $event)">
+        v-for="option in options"
+        :key="option.value"
+        name="アウトライン"
+        :model-value="modelValue"
+        size="smallIcon"
+        :value="option.value"
+        @update:model-value="$emit('update:modelValue', $event)"
+      >
         <ColorSample :color="option.absColor" />
       </ToggleButton>
     </Space>
@@ -68,11 +76,12 @@ export default defineComponent({
   <Fieldset v-else label="アウトライン">
     <Space vertical full>
       <OutlineItemBlock
-          v-for="(color, ix) in modelValue"
-          :key="ix"
-          :model-value="absColors[ix]"
-          @update:model-value="update(ix, $event)"
-          @remove="remove(ix) " />
+        v-for="(color, ix) in modelValue"
+        :key="ix"
+        :model-value="absColors[ix]"
+        @update:model-value="update(ix, $event)"
+        @remove="remove(ix)"
+      />
       <Button type="dashed" name="アウトライン (追加)" block @click="add">
         + アウトラインを追加
       </Button>

@@ -9,9 +9,7 @@ export default defineComponent({
     block: { type: Boolean, default: false },
     autofocus: { type: Boolean, default: false },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   computed: {
     className(): string {
       return `textarea${this.block ? " block" : ""}`;
@@ -22,12 +20,13 @@ export default defineComponent({
 
 <template>
   <textarea
-      :name="name"
-      :rows="rows"
-      :class="className"
-      :value="modelValue"
-      :autofocus="autofocus"
-      @input="$emit('update:modelValue', $event.target.value)" />
+    :name="name"
+    :rows="rows"
+    :class="className"
+    :value="modelValue"
+    :autofocus="autofocus"
+    @input="$emit('update:modelValue', $event.target.value)"
+  />
 </template>
 
 <style scoped>

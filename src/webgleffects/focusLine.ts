@@ -1,5 +1,9 @@
 import { WebGLEffect } from "../types";
-import { webglEffectShader, webglLoadEffectShader, webglSetFloat } from "../utils/webgl";
+import {
+  webglEffectShader,
+  webglLoadEffectShader,
+  webglSetFloat,
+} from "../utils/webgl";
 import shaderFocusLine from "../shaders/focusLine.glsl";
 
 const shader = webglEffectShader(shaderFocusLine.sourceCode);

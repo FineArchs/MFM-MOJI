@@ -34,7 +34,8 @@ export default [
       { label: "丸ゴ/極太", value: loadFont({ RoundedMPlusBlack }) },
       { label: "明朝", value: loadFont({ NotoSerifBlack }) },
     ],
-  }, {
+  },
+  {
     label: "デザインフォント",
     fonts: [
       { label: "デラゴシック", value: loadFont({ DelaGothic }) },

@@ -10,7 +10,11 @@ export default defineComponent({
 
 <template>
   <div class="media">
-    <span v-if="icon" class="icon" :style="{ backgroundImage: `url(${icon})` }" />
+    <span
+      v-if="icon"
+      class="icon"
+      :style="{ backgroundImage: `url(${icon})` }"
+    />
     <div class="body">
       <div class="title">
         <slot name="title" />

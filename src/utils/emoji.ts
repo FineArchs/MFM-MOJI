@@ -51,8 +51,8 @@ function renderFrameUncut(
   } else {
     const left = offsetH - width / 2;
     const top = offsetV - height / 2;
-    const targetLeft = left >= 0 ? 0 : -left * targetWidth / width;
-    const targetTop = top >= 0 ? 0 : -top * targetHeight / height;
+    const targetLeft = left >= 0 ? 0 : (-left * targetWidth) / width;
+    const targetTop = top >= 0 ? 0 : (-top * targetHeight) / height;
     ctx.drawImage(
       image,
       Math.max(0, left),
@@ -73,7 +73,14 @@ function renderFrameUncut(
 
   if (noCrop) {
     // copy webgl canvas with background to a 2d canvas
-    return cropCanvas(canvas, 0, 0, targetWidth * 2, targetHeight * 2, fillStyle);
+    return cropCanvas(
+      canvas,
+      0,
+      0,
+      targetWidth * 2,
+      targetHeight * 2,
+      fillStyle,
+    );
   } else {
     return cropCanvas(
       canvas,
@@ -134,14 +141,27 @@ function renderAllCellsFixedSize(
       framecount,
       transparent ? "rgba(0, 0, 0, 0)" : backgroundColor,
     );
-    const cells = cutoutCanvasIntoCells(img, 0, 0, hCells, vCells, croppedWidth, croppedHeight);
-    return Promise.all<Blob[]>(cells.map((row) => (
-      Promise.all<Blob>(row.map((cell) => (
-        new Promise((resolve) => {
-          cell.toBlob((blob) => resolve(blob!));
-        })
-      )))
-    )));
+    const cells = cutoutCanvasIntoCells(
+      img,
+      0,
+      0,
+      hCells,
+      vCells,
+      croppedWidth,
+      croppedHeight,
+    );
+    return Promise.all<Blob[]>(
+      cells.map((row) =>
+        Promise.all<Blob>(
+          row.map(
+            (cell) =>
+              new Promise((resolve) => {
+                cell.toBlob((blob) => resolve(blob!));
+              }),
+          ),
+        ),
+      ),
+    );
   } else {
     /* instantiate GIF encoders for each cells */
     const encoders = [];
@@ -154,7 +174,9 @@ function renderAllCellsFixedSize(
     }
     const delayPerFrame = 1000 / framerate;
     for (let i = 0; i < framecount; i += 1) {
-      const keyframe = animationInvert ? 1 - easing(i / framecount) : easing(i / framecount);
+      const keyframe = animationInvert
+        ? 1 - easing(i / framecount)
+        : easing(i / framecount);
       const frame = renderFrameUncut(
         keyframe,
         image,
@@ -189,12 +211,7 @@ function renderAllCellsFixedSize(
             throw new Error("Failed to get rendering context.");
           }
 
-          const { data } = ctx.getImageData(
-            0,
-            0,
-            croppedWidth,
-            croppedHeight,
-          );
+          const { data } = ctx.getImageData(0, 0, croppedWidth, croppedHeight);
 
           encoders[y][x].postMessage({
             addFrame: {
@@ -208,17 +225,24 @@ function renderAllCellsFixedSize(
         }
       }
     }
-    return Promise.all<Blob[]>(encoders.map((row) => Promise.all<Blob>(row.map((cell) => (
-      new Promise((resolve) => {
-        cell.addEventListener("message", (res) => {
-          cell.terminate();
-          resolve(res.data);
-        });
-        cell.postMessage({
-          finish: true,
-        });
-      })
-    )))));
+    return Promise.all<Blob[]>(
+      encoders.map((row) =>
+        Promise.all<Blob>(
+          row.map(
+            (cell) =>
+              new Promise((resolve) => {
+                cell.addEventListener("message", (res) => {
+                  cell.terminate();
+                  resolve(res.data);
+                });
+                cell.postMessage({
+                  finish: true,
+                });
+              }),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -273,9 +297,9 @@ export function renderAllCells(
        * If a cell exceeds the limitation, retry with smaller cell size.
        * This does not happen in most cases.
        */
-      const shouldRetry = ret.some((row) => row.some((cell: Blob) => (
-        cell.size >= binarySizeLimit
-      )));
+      const shouldRetry = ret.some((row) =>
+        row.some((cell: Blob) => cell.size >= binarySizeLimit),
+      );
       if (shouldRetry) {
         renderAllCells(
           image,

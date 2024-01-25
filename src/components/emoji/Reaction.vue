@@ -9,9 +9,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="reaction">
-    <img class="reaction_icon" :src="src"> 5
-  </div>
+  <div class="reaction"><img class="reaction_icon" :src="src" /> 5</div>
 </template>
 
 <style scoped>

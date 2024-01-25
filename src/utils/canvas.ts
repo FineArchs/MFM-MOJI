@@ -10,12 +10,15 @@ export const scaleCentered = (
     0,
     0,
     vScale,
-    cellWidth * (1 - hScale) / 2,
-    cellHeight * (1 - vScale) / 2,
+    (cellWidth * (1 - hScale)) / 2,
+    (cellHeight * (1 - vScale)) / 2,
   );
 };
 
-export const flipContext = (ctx: CanvasRenderingContext2D, width: number): void => {
+export const flipContext = (
+  ctx: CanvasRenderingContext2D,
+  width: number,
+): void => {
   ctx.translate(width, 0);
   ctx.scale(-1, 1);
 };
@@ -94,7 +97,13 @@ export const shrinkCanvas = (source: HTMLCanvasElement): HTMLCanvasElement => {
     }
   }
 
-  return cropCanvas(source, left, top, (right - left + 1) || 1, (bottom - top + 1) || 1);
+  return cropCanvas(
+    source,
+    left,
+    top,
+    right - left + 1 || 1,
+    bottom - top + 1 || 1,
+  );
 };
 
 /* Split canvas into a 2d-array of canvases */
@@ -127,7 +136,10 @@ export const cutoutCanvasIntoCells = (
 };
 
 /* Create an img object, set src attr to the specified url, and return it. */
-export const urlToImg = (url: string, cb: (img: HTMLImageElement) => void): void => {
+export const urlToImg = (
+  url: string,
+  cb: (img: HTMLImageElement) => void,
+): void => {
   const img = document.createElement("img");
   img.src = url;
   img.onload = () => cb(img);
@@ -137,26 +149,27 @@ export const mergeImages = (
   w: number,
   h: number,
   srcs: string[],
-): Promise<HTMLCanvasElement> => new Promise((resolve) => {
-  const canvas = document.createElement("canvas");
-  canvas.width = w;
-  canvas.height = h;
+): Promise<HTMLCanvasElement> =>
+  new Promise((resolve) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
 
-  const ctx = canvas.getContext("2d");
-  if (!ctx) {
-    throw new Error("Failed to get rendering context.");
-  }
-
-  let ix = 0;
-  const img = document.createElement("img");
-  img.onload = () => {
-    ctx.drawImage(img, 0, 0, w, h);
-    ix += 1;
-    if (ix === srcs.length) {
-      resolve(canvas);
-    } else {
-      img.src = srcs[ix];
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      throw new Error("Failed to get rendering context.");
     }
-  };
-  img.src = srcs[0];
-});
+
+    let ix = 0;
+    const img = document.createElement("img");
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, w, h);
+      ix += 1;
+      if (ix === srcs.length) {
+        resolve(canvas);
+      } else {
+        img.src = srcs[ix];
+      }
+    };
+    img.src = srcs[0];
+  });

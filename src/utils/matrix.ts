@@ -1,5 +1,14 @@
 // taken from glfx.js (by evanw, MIT License)
-export const matrixSquareToQuad = ([x0, y0, x1, y1, x2, y2, x3, y3]: number[]): number[] => {
+export const matrixSquareToQuad = ([
+  x0,
+  y0,
+  x1,
+  y1,
+  x2,
+  y2,
+  x3,
+  y3,
+]: number[]): number[] => {
   const dx1 = x1 - x2;
   const dy1 = y1 - y2;
   const dx2 = x3 - x2;
@@ -10,25 +19,41 @@ export const matrixSquareToQuad = ([x0, y0, x1, y1, x2, y2, x3, y3]: number[]): 
   const a = (dx3 * dy2 - dx2 * dy3) / det;
   const b = (dx1 * dy3 - dx3 * dy1) / det;
   return [
-    x1 - x0 + a * x1, y1 - y0 + a * y1, a,
-    x3 - x0 + b * x3, y3 - y0 + b * y3, b,
-    x0, y0, 1,
+    x1 - x0 + a * x1,
+    y1 - y0 + a * y1,
+    a,
+    x3 - x0 + b * x3,
+    y3 - y0 + b * y3,
+    b,
+    x0,
+    y0,
+    1,
   ];
 };
 
 // taken from glfx.js (by evanw, MIT License)
 export const matrixInverse = (m: number[]): number[] => {
-  const a = m[0]; const b = m[1]; const
-    c = m[2];
-  const d = m[3]; const e = m[4]; const
-    f = m[5];
-  const g = m[6]; const h = m[7]; const
-    i = m[8];
-  const det = a * e * i - a * f * h - b * d * i + b * f * g + c * d * h - c * e * g;
+  const a = m[0];
+  const b = m[1];
+  const c = m[2];
+  const d = m[3];
+  const e = m[4];
+  const f = m[5];
+  const g = m[6];
+  const h = m[7];
+  const i = m[8];
+  const det =
+    a * e * i - a * f * h - b * d * i + b * f * g + c * d * h - c * e * g;
   return [
-    (e * i - f * h) / det, (c * h - b * i) / det, (b * f - c * e) / det,
-    (f * g - d * i) / det, (a * i - c * g) / det, (c * d - a * f) / det,
-    (d * h - e * g) / det, (b * g - a * h) / det, (a * e - b * d) / det,
+    (e * i - f * h) / det,
+    (c * h - b * i) / det,
+    (b * f - c * e) / det,
+    (f * g - d * i) / det,
+    (a * i - c * g) / det,
+    (c * d - a * f) / det,
+    (d * h - e * g) / det,
+    (b * g - a * h) / det,
+    (a * e - b * d) / det,
   ];
 };
 
@@ -46,12 +71,14 @@ export const matrixMultiply = (a: number[], b: number[]): number[] => [
 ];
 
 // taken from glfx.js (by evanw, MIT License)
-export const matrixPerspective = (before: number[], after: number[]): number[] => {
+export const matrixPerspective = (
+  before: number[],
+  after: number[],
+): number[] => {
   const a = matrixSquareToQuad(after);
   const b = matrixSquareToQuad(before);
   return matrixMultiply(matrixInverse(a), b);
 };
 
-export const matrixFlatten = (matrix: number[]): number[] => (
-  Array.prototype.concat.apply([], matrix)
-);
+export const matrixFlatten = (matrix: number[]): number[] =>
+  Array.prototype.concat.apply([], matrix);

@@ -11,4 +11,9 @@ export const Base = (args) => ({
   data: () => args,
   template: "<Result :images='images' />",
 });
-Base.args = { images: [[image, image], [image, image]] };
+Base.args = {
+  images: [
+    [image, image],
+    [image, image],
+  ],
+};

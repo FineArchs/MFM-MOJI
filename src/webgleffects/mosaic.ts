@@ -1,5 +1,10 @@
 import { WebGLEffect } from "../types";
-import { webglEffectShader, webglLoadEffectShader, webglSetFloat, webglSetVec2 } from "../utils/webgl";
+import {
+  webglEffectShader,
+  webglLoadEffectShader,
+  webglSetFloat,
+  webglSetVec2,
+} from "../utils/webgl";
 import shaderMosaic from "../shaders/mosaic.glsl";
 
 const shader = webglEffectShader(shaderMosaic.sourceCode);
