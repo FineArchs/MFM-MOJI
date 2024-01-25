@@ -11,7 +11,7 @@
     "fix:js": "eslint --fix '**/*.{js,ts,vue}'",
     "test": "npm run test:e2e",
     "test:e2e": "playwright test",
-    "prettier": "prettier . --write",
+    "prettier": "prettier ./src --write",
     "storybook": "storybook dev -p 6006"
   },
   "browserslist": [
