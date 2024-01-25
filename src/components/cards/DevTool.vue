@@ -35,14 +35,24 @@ void main(void) {
 
 export default defineComponent({
   components: {
-    Textarea, Button, Checkbox, Space, Fieldset, TabGroup, TabButton,
+    Textarea,
+    Button,
+    Checkbox,
+    Space,
+    Fieldset,
+    TabGroup,
+    TabButton,
   },
   props: {
     show: { type: Boolean, required: true },
     noCrop: { type: Boolean, required: true },
   },
   emits: [
-    "update:noCrop", "buildAnimation", "buildEffect", "buildShader", "close",
+    "update:noCrop",
+    "buildAnimation",
+    "buildEffect",
+    "buildShader",
+    "close",
   ],
   data: () => ({
     tab: "animation",
@@ -112,7 +122,9 @@ export default defineComponent({
     },
     buildShader(): void {
       try {
-        const program: WebGLProgram = webglLoadEffectShader(webglEffectShader(this.source.webgl));
+        const program: WebGLProgram = webglLoadEffectShader(
+          webglEffectShader(this.source.webgl),
+        );
         const effect: WebGLEffect = (keyframe, w, h) => {
           webglSetFloat(program, "keyframe", keyframe);
           webglSetVec2(program, "resolution", [w, h]);
@@ -134,42 +146,34 @@ export default defineComponent({
       <TabButton v-model="tab" value="animation">
         アニメーション (js)
       </TabButton>
-      <TabButton v-model="tab" value="effect">
-        エフェクト (js)
-      </TabButton>
-      <TabButton v-model="tab" value="webgl">
-        エフェクト (glsl)
-      </TabButton>
+      <TabButton v-model="tab" value="effect"> エフェクト (js) </TabButton>
+      <TabButton v-model="tab" value="webgl"> エフェクト (glsl) </TabButton>
     </TabGroup>
     <Fieldset label="ソース">
       <Space vertical full>
-        <p class="description">
-          コンパイルエラーはコンソールを見てください。
-        </p>
+        <p class="description">コンパイルエラーはコンソールを見てください。</p>
         <p v-if="tab === 'animation'" class="description">
-          args: keyframe, ctx, image, offsetH, offsetV, width, height, cellWidth, cellHeight
+          args: keyframe, ctx, image, offsetH, offsetV, width, height,
+          cellWidth, cellHeight
         </p>
         <p v-if="tab === 'effect'" class="description">
           args: keyframe, ctx, cellWidth, cellHeight
         </p>
         <Textarea v-model="source[tab]" block :rows="20" />
-        <Button @click="build">
-          適用
-        </Button>
+        <Button @click="build"> 適用 </Button>
       </Space>
     </Fieldset>
     <Fieldset label="デバッグ">
       <Checkbox
-          :model-value="noCrop"
-          name="余白を切らない"
-          @update:model-value="$emit('update:noCrop', $event)">
+        :model-value="noCrop"
+        name="余白を切らない"
+        @update:model-value="$emit('update:noCrop', $event)"
+      >
         {{ "余白を切らない" }}
       </Checkbox>
     </Fieldset>
     <Button type="text" @click="$emit('close')">
-      <template #icon>
-        ↩︎
-      </template>
+      <template #icon> ↩︎ </template>
       開発者モードを終わる
     </Button>
   </Space>

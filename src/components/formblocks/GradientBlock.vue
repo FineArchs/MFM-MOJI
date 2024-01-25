@@ -7,16 +7,16 @@ import { ColorStop } from "../../types";
 
 export default defineComponent({
   components: {
-    Checkbox, Gradient, Space,
+    Checkbox,
+    Gradient,
+    Space,
   },
   props: {
     modelValue: { type: Array as PropType<ColorStop[]>, required: true },
     baseColor: { type: String, required: true },
     showDetails: { type: Boolean, required: true },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   methods: {
     initializeGradient(): void {
       this.$emit("update:modelValue", [
@@ -34,12 +34,16 @@ export default defineComponent({
       }
     },
     update(ix: number, value: ColorStop): void {
-      this.$emit("update:modelValue", this.modelValue.map((origVal, i) => (
-        i === ix ? value : origVal
-      )));
+      this.$emit(
+        "update:modelValue",
+        this.modelValue.map((origVal, i) => (i === ix ? value : origVal)),
+      );
     },
     remove(ix: number): void {
-      this.$emit("update:modelValue", this.modelValue.filter((_, i) => i !== ix));
+      this.$emit(
+        "update:modelValue",
+        this.modelValue.filter((_, i) => i !== ix),
+      );
     },
     add(): void {
       this.$emit("update:modelValue", [
@@ -57,14 +61,16 @@ export default defineComponent({
 <template>
   <Space vertical full>
     <Gradient
-        v-if="showDetails && modelValue.length > 0"
-        :model-value="modelValue"
-        :base-color="baseColor"
-        @update:model-value="$emit('update:modelValue', $event)" />
+      v-if="showDetails && modelValue.length > 0"
+      :model-value="modelValue"
+      :base-color="baseColor"
+      @update:model-value="$emit('update:modelValue', $event)"
+    />
     <Checkbox
-        name="グラデーション"
-        :model-value="modelValue.length > 0"
-        @update:model-value="toggle">
+      name="グラデーション"
+      :model-value="modelValue.length > 0"
+      @update:model-value="toggle"
+    >
       {{ "グラデーション" }}
     </Checkbox>
   </Space>

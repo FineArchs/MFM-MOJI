@@ -36,7 +36,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :class="['grid', { spaced }]" :style="{ gridTemplateColumns: `repeat(${numColumns}, 1fr)` }">
+  <div
+    :class="['grid', { spaced }]"
+    :style="{ gridTemplateColumns: `repeat(${numColumns}, 1fr)` }"
+  >
     <slot />
   </div>
 </template>

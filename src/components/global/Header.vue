@@ -1,8 +1,6 @@
 <template>
   <header class="header">
-    <h1 class="title">
-      MEGAMOJI
-    </h1>
+    <h1 class="title">MEGAMOJI</h1>
     <p class="description">
       カスタム絵文字をサクッと作れる<span class="nya">🐱</span>
     </p>

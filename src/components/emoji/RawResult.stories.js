@@ -11,4 +11,9 @@ export const Base = (args) => ({
   data: () => args,
   template: "<RawResult :images='images' />",
 });
-Base.args = { images: [[icon, icon], [icon, icon]] };
+Base.args = {
+  images: [
+    [icon, icon],
+    [icon, icon],
+  ],
+};

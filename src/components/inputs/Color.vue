@@ -13,9 +13,7 @@ export default defineComponent({
     style: { type: Object, default: () => ({}) },
     name: { type: String, default: "" },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   data: () => ({
     showPopover: false,
   }),
@@ -34,19 +32,21 @@ export default defineComponent({
 
 <template>
   <button
-      ref="input"
-      :class="['color', { block, dark }]"
-      :style="{ ...style, backgroundColor: modelValue }"
-      :name="name"
-      @click="showPopover = !showPopover">
+    ref="input"
+    :class="['color', { block, dark }]"
+    :style="{ ...style, backgroundColor: modelValue }"
+    :name="name"
+    @click="showPopover = !showPopover"
+  >
     {{ modelValue }}
   </button>
   <ColorPopover
-      :model-value="modelValue"
-      :show="showPopover"
-      :el="$refs.input"
-      :on-hide="hidePopover"
-      @update:model-value="$emit('update:modelValue', $event)" />
+    :model-value="modelValue"
+    :show="showPopover"
+    :el="$refs.input"
+    :on-hide="hidePopover"
+    @update:model-value="$emit('update:modelValue', $event)"
+  />
 </template>
 
 <style scoped>

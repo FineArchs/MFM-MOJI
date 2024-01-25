@@ -7,9 +7,7 @@ export default defineComponent({
     value: { type: String, default: null },
     name: { type: String, default: "" },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   computed: {
     selected(): boolean {
       return this.modelValue === this.value;
@@ -20,9 +18,10 @@ export default defineComponent({
 
 <template>
   <button
-      :class="['tab-button', { selected }]"
-      :name="name"
-      @click="$emit('update:modelValue', value)">
+    :class="['tab-button', { selected }]"
+    :name="name"
+    @click="$emit('update:modelValue', value)"
+  >
     <span v-if="$slots.icon" class="icon">
       <slot name="icon" />
     </span>

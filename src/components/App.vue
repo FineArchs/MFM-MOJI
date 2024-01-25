@@ -40,11 +40,11 @@ export default defineComponent({
   },
   data() {
     return {
-      baseImage: null as (HTMLImageElement | HTMLCanvasElement | null),
-      name: null as (string | null),
+      baseImage: null as HTMLImageElement | HTMLCanvasElement | null,
+      name: null as string | null,
       resultImages: [[]] as Blob[][],
       previewMode: false,
-      emojiSize: null as (number | null),
+      emojiSize: null as number | null,
       /* ui */
       ui: {
         mode: "text",
@@ -59,7 +59,10 @@ export default defineComponent({
   methods: {
     onToggleShowTarget(): void {
       this.ui.showTargetPanel = !this.ui.showTargetPanel;
-      Analytics.switchMode(this.ui.showTargetPanel ? "target" : this.ui.mode, true);
+      Analytics.switchMode(
+        this.ui.showTargetPanel ? "target" : this.ui.mode,
+        true,
+      );
     },
     onSelectMode(value: string): void {
       this.ui.mode = value;
@@ -85,30 +88,33 @@ export default defineComponent({
 
       <TabGroup>
         <TabButton
-            :model-value="ui.mode"
-            name="タブ(テキスト)"
-            value="text"
-            @update:model-value="onSelectMode">
+          :model-value="ui.mode"
+          name="タブ(テキスト)"
+          value="text"
+          @update:model-value="onSelectMode"
+        >
           <template #icon>
             <Text />
           </template>
           テキスト
         </TabButton>
         <TabButton
-            :model-value="ui.mode"
-            name="タブ(画像ファイル)"
-            value="file"
-            @update:model-value="onSelectMode">
+          :model-value="ui.mode"
+          name="タブ(画像ファイル)"
+          value="file"
+          @update:model-value="onSelectMode"
+        >
           <template #icon>
             <Image />
           </template>
           画像ファイル
         </TabButton>
         <TabButton
-            :model-value="ui.mode"
-            name="タブ(パーツ)"
-            value="parts"
-            @update:model-value="onSelectMode">
+          :model-value="ui.mode"
+          name="タブ(パーツ)"
+          value="parts"
+          @update:model-value="onSelectMode"
+        >
           <template #icon>
             <Emoji />
           </template>
@@ -116,33 +122,44 @@ export default defineComponent({
         </TabButton>
       </TabGroup>
 
-      <Grid :columns="[[760, 1], [Infinity, 3]]" spaced>
+      <Grid
+        :columns="[
+          [760, 1],
+          [Infinity, 3],
+        ]"
+        spaced
+      >
         <GridItem :span="2">
           <TextSource
-              :show="ui.mode == 'text' && !ui.showTargetPanel"
-              :emoji-size="emojiSize"
-              @render="onRender" />
+            :show="ui.mode == 'text' && !ui.showTargetPanel"
+            :emoji-size="emojiSize"
+            @render="onRender"
+          />
           <FileSource
-              :show="ui.mode == 'file' && !ui.showTargetPanel"
-              @render="onRender" />
+            :show="ui.mode == 'file' && !ui.showTargetPanel"
+            @render="onRender"
+          />
           <FukumojiSource
-              :show="ui.mode == 'parts' && !ui.showTargetPanel"
-              :emoji-size="emojiSize"
-              @render="onRender" />
+            :show="ui.mode == 'parts' && !ui.showTargetPanel"
+            :emoji-size="emojiSize"
+            @render="onRender"
+          />
           <Target
-              v-model:emoji-size="emojiSize"
-              :show="ui.showTargetPanel"
-              :base-image="baseImage"
-              @render="onRenderTarget" />
+            v-model:emoji-size="emojiSize"
+            :show="ui.showTargetPanel"
+            :base-image="baseImage"
+            @render="onRenderTarget"
+          />
         </GridItem>
         <GridItem>
           <Tutorial v-if="!baseImage" />
           <Result
-              v-else
-              :images="resultImages"
-              :name="name"
-              :show-target="ui.showTargetPanel"
-              @toggle-show-target="onToggleShowTarget" />
+            v-else
+            :images="resultImages"
+            :name="name"
+            :show-target="ui.showTargetPanel"
+            @toggle-show-target="onToggleShowTarget"
+          />
         </GridItem>
       </Grid>
 
@@ -154,72 +171,72 @@ export default defineComponent({
 <style>
 :root {
   /* colors */
-  --fg:             #000000d0;
-  --bg:             #ffffffff;
-  --accentBg:       #00000004;
-  --border:         #00000040;
+  --fg: #000000d0;
+  --bg: #ffffffff;
+  --accentBg: #00000004;
+  --border: #00000040;
   --primaryLighter: #ffb81c; /* l = 80 */
-  --primary:        #eeaa00; /* okhsl(80, 100, 75) */
-  --primaryDarker:  #cd9200; /* l = 65 */
-  --dangerLighter:  #fa837e; /* l = 70 */
-  --danger:         #f76b68; /* okhsl(24, 90, 65) */
-  --dangerDarker:   #e53c42; /* l = 55 */
-  --primaryBg:      #eeaa0020;
-  --dangerBg:       #f76b6820;
-  --primaryShadow:  0 0 0 2px #eeaa0030;
-  --dangerShadow:   0 0 0 2px #f76b6830;
+  --primary: #eeaa00; /* okhsl(80, 100, 75) */
+  --primaryDarker: #cd9200; /* l = 65 */
+  --dangerLighter: #fa837e; /* l = 70 */
+  --danger: #f76b68; /* okhsl(24, 90, 65) */
+  --dangerDarker: #e53c42; /* l = 55 */
+  --primaryBg: #eeaa0020;
+  --dangerBg: #f76b6820;
+  --primaryShadow: 0 0 0 2px #eeaa0030;
+  --dangerShadow: 0 0 0 2px #f76b6830;
 
-  --elevatedBg:      #ffffffff;
+  --elevatedBg: #ffffffff;
   --elevationShadow: rgb(0 0 0 / 0.19) 0 10px 20px, rgb(0 0 0 / 0.23) 0 6px 6px;
 
-  --pressableShadowDefault:      0 1px #00000040;
-  --pressableShadowPrimary:      0 1px #00000020, 0 1px var(--primary);
+  --pressableShadowDefault: 0 1px #00000040;
+  --pressableShadowPrimary: 0 1px #00000020, 0 1px var(--primary);
   --pressableShadowPrimaryHover: 0 1px #00000020, 0 1px var(--primaryLighter);
-  --pressableShadowDanger:       0 1px #00000020, 0 1px var(--danger);
-  --pressableShadowDangerHover:  0 1px #00000020, 0 1px var(--dangerLighter);
+  --pressableShadowDanger: 0 1px #00000020, 0 1px var(--danger);
+  --pressableShadowDangerHover: 0 1px #00000020, 0 1px var(--dangerLighter);
 
-  --distantFg:     var(--bg);
-  --light:         var(--bg);
-  --dark:          var(--fg);
-  --primaryHover:  var(--primaryLighter);
+  --distantFg: var(--bg);
+  --light: var(--bg);
+  --dark: var(--fg);
+  --primaryHover: var(--primaryLighter);
   --primaryActive: var(--primaryDarker);
-  --dangerHover:   var(--dangerLighter);
-  --dangerActive:  var(--dangerDarker);
+  --dangerHover: var(--dangerLighter);
+  --dangerActive: var(--dangerDarker);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --fg:             #ffffffd0;
-    --bg:             #222222ff;
-    --accentBg:       #ffffff10;
-    --border:         #ffffff40;
+    --fg: #ffffffd0;
+    --bg: #222222ff;
+    --accentBg: #ffffff10;
+    --border: #ffffff40;
     --primaryLighter: #e6af47; /* l = 75 */
-    --primary:        #d7a139; /* okhsl(80, 80, 70) */
-    --primaryDarker:  #c79431; /* l = 65 */
-    --dangerLighter:  #f38882; /* l = 70 */
-    --danger:         #ee736e; /* okhsl(24, 80, 65) */
-    --dangerDarker:   #e65f5c; /* k = 60 */
-    --primaryBg:      #d7a13920;
-    --dangerBg:       #ee736e20;
-    --primaryShadow:  0 0 0 2px #e6af4730;
-    --dangerShadow:   0 0 0 2px #ee736e30;
+    --primary: #d7a139; /* okhsl(80, 80, 70) */
+    --primaryDarker: #c79431; /* l = 65 */
+    --dangerLighter: #f38882; /* l = 70 */
+    --danger: #ee736e; /* okhsl(24, 80, 65) */
+    --dangerDarker: #e65f5c; /* k = 60 */
+    --primaryBg: #d7a13920;
+    --dangerBg: #ee736e20;
+    --primaryShadow: 0 0 0 2px #e6af4730;
+    --dangerShadow: 0 0 0 2px #ee736e30;
 
-    --elevatedBg:      #555555ff;
+    --elevatedBg: #555555ff;
     --elevationShadow: none;
 
-    --pressableShadowDefault:      0 1px #00000080;
-    --pressableShadowPrimary:      0 1px #00000040, 0 1px var(--primary);
+    --pressableShadowDefault: 0 1px #00000080;
+    --pressableShadowPrimary: 0 1px #00000040, 0 1px var(--primary);
     --pressableShadowPrimaryHover: 0 1px #00000040, 0 1px var(--primaryDarker);
-    --pressableShadowDanger:       0 1px #00000040, 0 1px var(--danger);
-    --pressableShadowDangerHover:  0 1px #00000040, 0 1px var(--dangerDarker);
+    --pressableShadowDanger: 0 1px #00000040, 0 1px var(--danger);
+    --pressableShadowDangerHover: 0 1px #00000040, 0 1px var(--dangerDarker);
 
-    --distantFg:     var(--bg);
-    --light:         var(--fg);
-    --dark:          var(--bg);
-    --primaryHover:  var(--primaryDarker);
+    --distantFg: var(--bg);
+    --light: var(--fg);
+    --dark: var(--bg);
+    --primaryHover: var(--primaryDarker);
     --primaryActive: var(--primaryLighter);
-    --dangerHover:   var(--dangerDarker);
-    --dangerActive:  var(--dangerLighter);
+    --dangerHover: var(--dangerDarker);
+    --dangerActive: var(--dangerLighter);
   }
 }
 
@@ -250,8 +267,10 @@ export default defineComponent({
 
   /* other */
   --textareaLineHeight: 1.4;
-  --selectPadding: var(--paddingV) calc(var(--paddingH) + 1rem) var(--paddingV) var(--paddingH);
-  --numberPadding: var(--paddingV) calc(var(--paddingH) + 2rem) var(--paddingV) var(--paddingH);
+  --selectPadding: var(--paddingV) calc(var(--paddingH) + 1rem) var(--paddingV)
+    var(--paddingH);
+  --numberPadding: var(--paddingV) calc(var(--paddingH) + 2rem) var(--paddingV)
+    var(--paddingH);
   --sliderRailHeight: 0.375em;
   --sliderMarkHeight: 0.75em;
   --sliderKnobSize: 1.25em;
@@ -265,13 +284,8 @@ export default defineComponent({
 /* stylelint-disable-next-line selector-max-type */
 html {
   padding: var(--spacingLarge);
-  font-family:
-    "Helvetica Neue",
-    Arial,
-    "Hiragino Kaku Gothic ProN",
-    "Hiragino Sans",
-    Meiryo,
-    sans-serif;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
   font-size: var(--fontSizeMedium);
   line-height: 1;
   color: var(--fg);

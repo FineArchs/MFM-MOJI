@@ -1,9 +1,9 @@
 import * as ColorConvert from "color-convert";
 
-export type HSV = { h: number, s: number, v: number };
-export type HSL = { h: number, s: number, l: number };
-export type RGB = { r: number, g: number, b: number };
-export type HWB = { h: number, w: number, b: number };
+export type HSV = { h: number; s: number; v: number };
+export type HSL = { h: number; s: number; l: number };
+export type RGB = { r: number; g: number; b: number };
+export type HWB = { h: number; w: number; b: number };
 
 export const HSV2RGB = (hsv: HSV): RGB => {
   const ret = ColorConvert.hsv.rgb([hsv.h, hsv.s * 100, hsv.v * 100]);
@@ -32,19 +32,31 @@ export const HSL2HEX = (hsl: HSL): string => {
 
 const lighterColor = (hexColor: string): string => {
   const hsl = ColorConvert.hex.hsl(hexColor);
-  const newColor = ColorConvert.hsl.hex([hsl[0], hsl[1], Math.min(100, hsl[2] + 20)]);
+  const newColor = ColorConvert.hsl.hex([
+    hsl[0],
+    hsl[1],
+    Math.min(100, hsl[2] + 20),
+  ]);
   return `#${newColor}`;
 };
 
 const lightererColor = (hexColor: string): string => {
   const hsl = ColorConvert.hex.hsl(hexColor);
-  const newColor = ColorConvert.hsl.hex([hsl[0], hsl[1], Math.min(100, hsl[2] + 40)]);
+  const newColor = ColorConvert.hsl.hex([
+    hsl[0],
+    hsl[1],
+    Math.min(100, hsl[2] + 40),
+  ]);
   return `#${newColor}`;
 };
 
 const darkerColor = (hexColor: string): string => {
   const hsl = ColorConvert.hex.hsl(hexColor);
-  const newColor = ColorConvert.hsl.hex([hsl[0], hsl[1], Math.max(0, hsl[2] - 15)]);
+  const newColor = ColorConvert.hsl.hex([
+    hsl[0],
+    hsl[1],
+    Math.max(0, hsl[2] - 15),
+  ]);
   return `#${newColor}`;
 };
 

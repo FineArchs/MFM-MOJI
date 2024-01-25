@@ -16,16 +16,22 @@ import Save from "../icons/Save.vue";
 
 export default defineComponent({
   components: {
-    RawResult, Preview, Checkbox, Card, Space, Button, Effect, Back, Save,
+    RawResult,
+    Preview,
+    Checkbox,
+    Card,
+    Space,
+    Button,
+    Effect,
+    Back,
+    Save,
   },
   props: {
     images: { type: Array as PropType<Blob[][]>, required: true },
     name: { type: String, default: null },
     showTarget: { type: Boolean, required: false },
   },
-  emits: [
-    "toggleShowTarget",
-  ],
+  emits: ["toggleShowTarget"],
   data() {
     return {
       previewMode: false,
@@ -33,13 +39,17 @@ export default defineComponent({
   },
   computed: {
     resultImageUrls(): string[][] {
-      return this.images.map((row) => row.map((cell) => URL.createObjectURL(cell)));
+      return this.images.map((row) =>
+        row.map((cell) => URL.createObjectURL(cell)),
+      );
     },
   },
   methods: {
     onDownload(): void {
       const download = prepareDownloadFile(this.images);
-      const filename = filenamify(this.name ?? "", { replacement: "" }).normalize() || "megamoji";
+      const filename =
+        filenamify(this.name ?? "", { replacement: "" }).normalize() ||
+        "megamoji";
       download.then((res) => saveAs(res, `${filename}.${extension(res)}`));
       Analytics.download();
     },
@@ -52,8 +62,16 @@ export default defineComponent({
     <Card class="result" title="プレビュー">
       <Space vertical large>
         <RawResult v-if="!previewMode" :images="resultImageUrls" />
-        <Preview v-if="previewMode" :images="resultImageUrls" :dark-mode="false" />
-        <Preview v-if="previewMode" :images="resultImageUrls" :dark-mode="true" />
+        <Preview
+          v-if="previewMode"
+          :images="resultImageUrls"
+          :dark-mode="false"
+        />
+        <Preview
+          v-if="previewMode"
+          :images="resultImageUrls"
+          :dark-mode="true"
+        />
         <Checkbox v-model="previewMode" name="サンプル表示">
           {{ "サンプル表示" }}
         </Checkbox>
@@ -61,18 +79,20 @@ export default defineComponent({
     </Card>
     <Space class="buttons">
       <Button
-          v-if="showTarget"
-          name="効果をつける(戻る)"
-          @click="$emit('toggleShowTarget', $event)">
+        v-if="showTarget"
+        name="効果をつける(戻る)"
+        @click="$emit('toggleShowTarget', $event)"
+      >
         <template #icon>
           <Back />
         </template>
         もどる
       </Button>
       <Button
-          v-else
-          name="効果をつける"
-          @click="$emit('toggleShowTarget', $event)">
+        v-else
+        name="効果をつける"
+        @click="$emit('toggleShowTarget', $event)"
+      >
         <template #icon>
           <Effect />
         </template>
@@ -90,8 +110,7 @@ export default defineComponent({
 
 <style scoped>
 .result {
-  background-image:
-    linear-gradient(
+  background-image: linear-gradient(
       45deg,
       var(--bg) 25%,
       transparent 25%,
@@ -107,7 +126,9 @@ export default defineComponent({
       var(--bg) 75%,
       var(--bg)
     );
-  background-position: 0 0, 10px 10px;
+  background-position:
+    0 0,
+    10px 10px;
   background-size: 20px 20px;
 }
 </style>

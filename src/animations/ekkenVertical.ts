@@ -17,10 +17,10 @@ const animationEkkenVertical: Animation = (
     offsetV,
     width,
     height,
-    cellWidth / 2 * (1 - keyframe / 2),
-    cellHeight / 2 * (1 - keyframe / 2),
-    cellWidth * keyframe / 2,
-    cellHeight * keyframe / 2,
+    (cellWidth / 2) * (1 - keyframe / 2),
+    (cellHeight / 2) * (1 - keyframe / 2),
+    (cellWidth * keyframe) / 2,
+    (cellHeight * keyframe) / 2,
   );
   ctx.drawImage(
     image,
@@ -29,7 +29,7 @@ const animationEkkenVertical: Animation = (
     width,
     height / 2,
     cellWidth / 4,
-    cellHeight / 4 * (1 - keyframe),
+    (cellHeight / 4) * (1 - keyframe),
     cellWidth / 2,
     cellHeight / 4,
   );
@@ -40,7 +40,7 @@ const animationEkkenVertical: Animation = (
     width,
     height / 2,
     cellWidth / 4,
-    cellHeight / 2 + cellHeight / 4 * keyframe,
+    cellHeight / 2 + (cellHeight / 4) * keyframe,
     cellWidth / 2,
     cellHeight / 4,
   );

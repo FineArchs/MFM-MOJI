@@ -13,7 +13,19 @@ const Template = (args) => ({
 });
 
 export const Light = Template.bind({});
-Light.args = { images: [[icon, icon], [icon, icon]], darkMode: false };
+Light.args = {
+  images: [
+    [icon, icon],
+    [icon, icon],
+  ],
+  darkMode: false,
+};
 
 export const Dark = Template.bind({});
-Dark.args = { images: [[icon, icon], [icon, icon]], darkMode: true };
+Dark.args = {
+  images: [
+    [icon, icon],
+    [icon, icon],
+  ],
+  darkMode: true,
+};

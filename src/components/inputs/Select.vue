@@ -2,7 +2,7 @@
 import { defineComponent, PropType } from "vue";
 import Expand from "../images/Expand.svg";
 
-type Option = { label: string, value: unknown };
+type Option = { label: string; value: unknown };
 
 export default defineComponent({
   props: {
@@ -12,16 +12,16 @@ export default defineComponent({
     block: { type: Boolean, default: false },
     nullable: { type: Boolean, default: false },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   data: () => ({
     Expand,
   }),
   computed: {
     value(): number | null {
       if (!this.modelValue) return -1;
-      return this.options.findIndex((option) => option.label === this.modelValue.label);
+      return this.options.findIndex(
+        (option) => option.label === this.modelValue.label,
+      );
     },
   },
   methods: {
@@ -38,14 +38,13 @@ export default defineComponent({
 
 <template>
   <select
-      :class="['select', { block }]"
-      :name="name"
-      :value="value"
-      :style="{ backgroundImage: `url(${Expand})` }"
-      @change="onChange($event.target.value)">
-    <option v-if="nullable" value="-1">
-      なし
-    </option>
+    :class="['select', { block }]"
+    :name="name"
+    :value="value"
+    :style="{ backgroundImage: `url(${Expand})` }"
+    @change="onChange($event.target.value)"
+  >
+    <option v-if="nullable" value="-1">なし</option>
     <option v-for="(option, ix) in options" :key="ix" :value="ix">
       {{ option.label }}
     </option>
@@ -65,7 +64,8 @@ export default defineComponent({
   cursor: pointer;
   background-color: var(--bg);
   background-repeat: no-repeat;
-  background-position: right calc(var(--paddingH) - var(--spacingInlineSmall)) bottom 50%;
+  background-position: right calc(var(--paddingH) - var(--spacingInlineSmall))
+    bottom 50%;
   background-size: var(--fontSizeXLarge);
   border: 1px solid var(--border);
   border-radius: var(--borderRadius);
