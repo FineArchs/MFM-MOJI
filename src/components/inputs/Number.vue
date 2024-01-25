@@ -5,7 +5,8 @@ import Increment from "../icons/Increment.vue";
 
 export default defineComponent({
   components: {
-    Decrement, Increment,
+    Decrement,
+    Increment,
   },
   props: {
     modelValue: { type: Number, required: true },
@@ -13,9 +14,7 @@ export default defineComponent({
     min: { type: Number, default: 0 },
     max: { type: Number, default: Infinity },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   data: (props) => ({
     stringValue: String(props.modelValue),
     stringIsValid: true,
@@ -32,12 +31,16 @@ export default defineComponent({
     onChange(value: string): void {
       const number = Number(value);
       this.stringValue = value;
-      this.stringIsValid = value !== ""
-                        && Number.isInteger(number)
-                        && this.min <= number
-                        && number <= this.max;
+      this.stringIsValid =
+        value !== "" &&
+        Number.isInteger(number) &&
+        this.min <= number &&
+        number <= this.max;
       if (this.stringIsValid) {
-        this.$emit("update:modelValue", Math.min(this.max, Math.max(this.min, number)));
+        this.$emit(
+          "update:modelValue",
+          Math.min(this.max, Math.max(this.min, number)),
+        );
       }
     },
   },
@@ -47,10 +50,11 @@ export default defineComponent({
 <template>
   <div :class="['wrapper', { error: !stringIsValid }]">
     <input
-        class="number"
-        type="text"
-        :value="stringValue"
-        @input="onChange($event.target.value)">
+      class="number"
+      type="text"
+      :value="stringValue"
+      @input="onChange($event.target.value)"
+    />
     <div class="buttons">
       <button class="button" @click="onChange(modelValue - 1)">
         <Decrement />

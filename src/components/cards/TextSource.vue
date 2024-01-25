@@ -47,9 +47,7 @@ export default defineComponent({
     show: { type: Boolean, required: true },
     emojiSize: { type: Number, default: null },
   },
-  emits: [
-    "render",
-  ],
+  emits: ["render"],
   data() {
     return {
       conf: {
@@ -72,9 +70,11 @@ export default defineComponent({
   },
   computed: {
     absoluteOutlines(): string[] {
-      return this.conf.outlines.map((outline) => absColor(outline, this.conf.color));
+      return this.conf.outlines.map((outline) =>
+        absColor(outline, this.conf.color),
+      );
     },
-    absoluteGradient(): { color: string, pos: number }[] {
+    absoluteGradient(): { color: string; pos: number }[] {
       return this.conf.gradient.map((cs) => ({
         color: absColor(cs.color, this.conf.color),
         pos: cs.pos,
@@ -134,49 +134,58 @@ export default defineComponent({
 
 <template>
   <Card v-if="show">
-    <Grid :columns="[[450, 1], [Infinity, 3]]" spaced>
+    <Grid
+      :columns="[
+        [450, 1],
+        [Infinity, 3],
+      ]"
+      spaced
+    >
       <GridItem>
-        <FontSelectBlock
-            v-model="conf.font"
-            :show-details="showDetails" />
+        <FontSelectBlock v-model="conf.font" :show-details="showDetails" />
       </GridItem>
       <GridItem :span="2">
         <Space vertical xlarge full>
           <Fieldset label="テキスト (改行可)">
             <Space vertical full>
               <Textarea
-                  v-model="conf.content"
-                  name="テキスト"
-                  block
-                  autofocus
-                  :rows="5" />
+                v-model="conf.content"
+                name="テキスト"
+                block
+                autofocus
+                :rows="5"
+              />
               <Space small>
                 <ToggleButton
-                    v-model="conf.align"
-                    name="両端揃え"
-                    size="smallIcon"
-                    value="stretch">
+                  v-model="conf.align"
+                  name="両端揃え"
+                  size="smallIcon"
+                  value="stretch"
+                >
                   <AlignJustify />
                 </ToggleButton>
                 <ToggleButton
-                    v-model="conf.align"
-                    name="中央揃え"
-                    size="smallIcon"
-                    value="center">
+                  v-model="conf.align"
+                  name="中央揃え"
+                  size="smallIcon"
+                  value="center"
+                >
                   <AlignCenter />
                 </ToggleButton>
                 <ToggleButton
-                    v-model="conf.align"
-                    name="左揃え"
-                    size="smallIcon"
-                    value="left">
+                  v-model="conf.align"
+                  name="左揃え"
+                  size="smallIcon"
+                  value="left"
+                >
                   <AlignLeft />
                 </ToggleButton>
                 <ToggleButton
-                    v-model="conf.align"
-                    name="右揃え"
-                    size="smallIcon"
-                    value="right">
+                  v-model="conf.align"
+                  name="右揃え"
+                  size="smallIcon"
+                  value="right"
+                >
                   <AlignRight />
                 </ToggleButton>
               </Space>
@@ -184,28 +193,32 @@ export default defineComponent({
           </Fieldset>
           <Fieldset v-if="showDetails" label="行間 (文字分)">
             <Slider
-                v-model="conf.lineSpacing"
-                block
-                :min="0"
-                :max="1"
-                :step="0.01" />
+              v-model="conf.lineSpacing"
+              block
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
           </Fieldset>
           <Fieldset v-if="showDetails" label="パディング (文字分)">
             <Slider
-                v-model="conf.padding"
-                block
-                :min="0"
-                :max="1"
-                :step="0.01" />
+              v-model="conf.padding"
+              block
+              :min="0"
+              :max="1"
+              :step="0.01"
+            />
           </Fieldset>
           <FontColorSelectBlock
-              v-model="conf.color"
-              v-model:gradient="conf.gradient"
-              :show-details="showDetails" />
+            v-model="conf.color"
+            v-model:gradient="conf.gradient"
+            :show-details="showDetails"
+          />
           <OutlineBlock
-              v-model="conf.outlines"
-              :base-color="conf.color"
-              :show-details="showDetails" />
+            v-model="conf.outlines"
+            :base-color="conf.color"
+            :show-details="showDetails"
+          />
         </Space>
       </GridItem>
     </Grid>

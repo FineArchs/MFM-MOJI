@@ -6,19 +6,17 @@ const effectNorinori: Effect = (keyframe, ctx, cellWidth, cellHeight) => {
   const b = (1 - 2 * k * k) / (k * k - k);
 
   const kf = (keyframe % 0.5) * 2;
-  const sign = (keyframe < 0.5) ? -1 : 1;
-  const ratio = (kf < k
-    ? (-a * kf ** 2 + -b * kf)
-    : (a * kf ** 2 + b * kf + 2)
-  ) / 6;
+  const sign = keyframe < 0.5 ? -1 : 1;
+  const ratio =
+    (kf < k ? -a * kf ** 2 + -b * kf : a * kf ** 2 + b * kf + 2) / 6;
 
   ctx.transform(
     1,
     0,
     sign * ratio,
     1 - ratio,
-    -sign * ratio * cellHeight * 3 / 4,
-    ratio * cellHeight * 3 / 4,
+    (-sign * ratio * cellHeight * 3) / 4,
+    (ratio * cellHeight * 3) / 4,
   );
 };
 

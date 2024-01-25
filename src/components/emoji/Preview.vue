@@ -15,27 +15,15 @@ export default defineComponent({
 
 <template>
   <div :class="`preview ${darkMode ? 'dark' : 'light'}`">
-    <div>
-      <b>ほげほげさん</b> <small>1:23 AM</small>
-    </div>
+    <div><b>ほげほげさん</b> <small>1:23 AM</small></div>
     <div v-for="(row, i) in images" :key="i" class="row">
-      <img
-          v-for="(col, j) in row"
-          :key="j"
-          class="img large"
-          :src="col">
+      <img v-for="(col, j) in row" :key="j" class="img large" :src="col" />
     </div>
-    <div>
-      ほげほげほげほげほげほげほげほげ。
-    </div>
+    <div>ほげほげほげほげほげほげほげほげ。</div>
     <div>
       文章中で使うとこんな
       <span v-for="(row, i) in images" :key="i">
-        <img
-            v-for="(col, j) in row"
-            :key="j"
-            class="img in_text"
-            :src="col">
+        <img v-for="(col, j) in row" :key="j" class="img in_text" :src="col" />
       </span>
       感じ。
     </div>

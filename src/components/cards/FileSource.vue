@@ -9,24 +9,27 @@ import Image from "../icons/Image.vue";
 import { Filter } from "../../types";
 import filters from "../../constants/filters";
 
-type FilterOption = { label: string, value: Filter };
+type FilterOption = { label: string; value: Filter };
 
 export default defineComponent({
   components: {
-    FileSelect, Select, Image, Card, Fieldset, Space,
+    FileSelect,
+    Select,
+    Image,
+    Card,
+    Fieldset,
+    Space,
   },
   props: {
     show: { type: Boolean, required: true },
   },
-  emits: [
-    "render",
-  ],
+  emits: ["render"],
   data() {
     return {
       FILTER_OPTIONS: filters,
       conf: {
-        img: null as (HTMLImageElement | null),
-        filter: null as (FilterOption | null),
+        img: null as HTMLImageElement | null,
+        filter: null as FilterOption | null,
       },
     };
   },
@@ -61,7 +64,12 @@ export default defineComponent({
         </FileSelect>
       </Fieldset>
       <Fieldset label="前処理">
-        <Select v-model="conf.filter" name="前処理" nullable :options="FILTER_OPTIONS" />
+        <Select
+          v-model="conf.filter"
+          name="前処理"
+          nullable
+          :options="FILTER_OPTIONS"
+        />
       </Fieldset>
     </Space>
   </Card>

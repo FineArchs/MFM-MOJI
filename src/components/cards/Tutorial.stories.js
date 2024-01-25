@@ -10,4 +10,4 @@ export const Base = (args) => ({
   data: () => args,
   template: "<Tutorial />",
 });
-Base.args = { };
+Base.args = {};

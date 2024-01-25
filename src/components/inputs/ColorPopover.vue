@@ -15,7 +15,11 @@ const validateColor = (color: string): boolean => {
 
 export default defineComponent({
   components: {
-    Popover, HueSlider, TonePicker, Input, Space,
+    Popover,
+    HueSlider,
+    TonePicker,
+    Input,
+    Space,
   },
   props: {
     el: { type: Object as PropType<HTMLElement>, default: null },
@@ -23,9 +27,7 @@ export default defineComponent({
     onHide: { type: Function, required: true },
     modelValue: { type: String, required: true },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   data: (props) => ({
     hsv: HEX2HSV(props.modelValue),
     stringValue: props.modelValue,
@@ -65,16 +67,27 @@ export default defineComponent({
 </script>
 
 <template>
-  <Popover ref="popover" :show="show" :el="el" :on-hide="onHide" :style="{ width: '260px' }">
+  <Popover
+    ref="popover"
+    :show="show"
+    :el="el"
+    :on-hide="onHide"
+    :style="{ width: '260px' }"
+  >
     <Space vertical full>
-      <TonePicker :model-value="hsv" :style="{ height: '180px' }" @update:model-value="onPickHSV" />
+      <TonePicker
+        :model-value="hsv"
+        :style="{ height: '180px' }"
+        @update:model-value="onPickHSV"
+      />
       <HueSlider :model-value="hsv" @update:model-value="onPickHSV" />
       <Input
-          block
-          small
-          :model-value="stringValue"
-          :error="!stringIsValid"
-          @update:model-value="onInputString" />
+        block
+        small
+        :model-value="stringValue"
+        :error="!stringIsValid"
+        @update:model-value="onInputString"
+      />
       <slot />
     </Space>
   </Popover>

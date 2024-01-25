@@ -12,7 +12,8 @@ const effects = [
       { label: "エフェクト１", value: null },
       { label: "エフェクト２", value: null },
     ],
-  }, {
+  },
+  {
     label: "カテゴリ２",
     effects: [
       { label: "エフェクト３", value: null },

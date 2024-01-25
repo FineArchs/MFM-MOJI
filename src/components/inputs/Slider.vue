@@ -2,11 +2,14 @@
 import { defineComponent, PropType } from "vue";
 import { nearestIndex } from "../../utils/array";
 
-type Pos = { left: string, width?: string };
+type Pos = { left: string; width?: string };
 
 export default defineComponent({
   props: {
-    modelValue: { type: [Number, Array] as PropType<number | [number, number]>, required: true },
+    modelValue: {
+      type: [Number, Array] as PropType<number | [number, number]>,
+      required: true,
+    },
     marks: { type: Array as PropType<number[]>, default: () => [] },
     step: { type: Number, default: 1 },
     min: { type: Number, required: true },
@@ -14,9 +17,7 @@ export default defineComponent({
     block: { type: Boolean, default: false },
     nonzero: { type: Boolean, default: false },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   data: () => ({
     moveHandler: null as ((e: PointerEvent) => void) | null,
     upHandler: null as ((e?: PointerEvent) => void) | null,
@@ -24,7 +25,9 @@ export default defineComponent({
   }),
   computed: {
     knobPos(): Pos[] {
-      const values = Array.isArray(this.modelValue) ? this.modelValue : [this.modelValue];
+      const values = Array.isArray(this.modelValue)
+        ? this.modelValue
+        : [this.modelValue];
       return values.map((value) => {
         const pos = (value - this.min) / (this.max - this.min);
         return { left: `${pos * 100}%` };
@@ -65,7 +68,9 @@ export default defineComponent({
     },
     startDrag(evt: PointerEvent): void {
       if (this.moveHandler) return;
-      const rect = (this.$refs.container as HTMLDivElement).getBoundingClientRect();
+      const rect = (
+        this.$refs.container as HTMLDivElement
+      ).getBoundingClientRect();
       const startPos = (evt.clientX - rect.left) / rect.width;
       const startValue = startPos * (this.max - this.min) + this.min;
       if (!Array.isArray(this.modelValue)) {
@@ -79,11 +84,15 @@ export default defineComponent({
         const rounded = Math.round(value / this.step) * this.step;
         if (Array.isArray(this.modelValue)) {
           const upperClamped = Math.max(
-            this.targetId === 1 ? this.modelValue[0] + (this.nonzero ? this.step : 0) : this.min,
+            this.targetId === 1
+              ? this.modelValue[0] + (this.nonzero ? this.step : 0)
+              : this.min,
             rounded,
           );
           const bothClamped = Math.min(
-            this.targetId === 0 ? this.modelValue[1] - (this.nonzero ? this.step : 0) : this.max,
+            this.targetId === 0
+              ? this.modelValue[1] - (this.nonzero ? this.step : 0)
+              : this.max,
             upperClamped,
           );
           this.update(bothClamped);
@@ -124,10 +133,11 @@ export default defineComponent({
       <div class="range" :style="range" />
       <div v-for="(pos, ix) in markPos" :key="ix" class="mark" :style="pos" />
       <div
-          v-for="(pos, ix) in knobPos"
-          :key="ix"
-          :class="['knob', { active: targetId === ix }]"
-          :style="pos">
+        v-for="(pos, ix) in knobPos"
+        :key="ix"
+        :class="['knob', { active: targetId === ix }]"
+        :style="pos"
+      >
         <div class="knob-icon" />
         <div class="knob-value">
           {{ Array.isArray(modelValue) ? modelValue[ix] : modelValue }}

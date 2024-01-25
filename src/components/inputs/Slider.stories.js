@@ -17,10 +17,28 @@ const Template = (args) => ({
 });
 
 export const Base = Template.bind({});
-Base.args = { initialValue: 5, min: 0, max: 100, marks: [25, 75], block: false };
+Base.args = {
+  initialValue: 5,
+  min: 0,
+  max: 100,
+  marks: [25, 75],
+  block: false,
+};
 
 export const Range = Template.bind({});
-Range.args = { initialValue: [5, 20], min: 0, max: 100, marks: [25, 75], block: false };
+Range.args = {
+  initialValue: [5, 20],
+  min: 0,
+  max: 100,
+  marks: [25, 75],
+  block: false,
+};
 
 export const Block = Template.bind({});
-Block.args = { initialValue: [5, 20], min: 0, max: 100, marks: [25, 75], block: true };
+Block.args = {
+  initialValue: [5, 20],
+  min: 0,
+  max: 100,
+  marks: [25, 75],
+  block: true,
+};

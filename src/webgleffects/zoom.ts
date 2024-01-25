@@ -1,5 +1,10 @@
 import { WebGLEffect } from "../types";
-import { webglEffectShader, webglLoadEffectShader, webglSetFloat, webglSetVec2 } from "../utils/webgl";
+import {
+  webglEffectShader,
+  webglLoadEffectShader,
+  webglSetFloat,
+  webglSetVec2,
+} from "../utils/webgl";
 import shaderZoomBlur from "../shaders/zoomBlur.glsl";
 
 const shader = webglEffectShader(shaderZoomBlur.sourceCode);

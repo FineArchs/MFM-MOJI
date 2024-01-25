@@ -1,7 +1,5 @@
 // A filter takes an image, and returns filtered image as an DataURL.
-export type Filter = (
-  image: HTMLImageElement,
-) => HTMLCanvasElement;
+export type Filter = (image: HTMLImageElement) => HTMLCanvasElement;
 
 // An animation takes a CanvasRenderingContext2D and an image, and render
 // image to the canvas.
@@ -13,9 +11,13 @@ export type Animation = (
   // the source image to be rendered
   image: HTMLImageElement | HTMLCanvasElement,
   // range of the source image to be rendered
-  offsetH: number, offsetV: number, width: number, height: number,
-// size of the image to be rendered
-  cellWidth: number, cellHeight: number,
+  offsetH: number,
+  offsetV: number,
+  width: number,
+  height: number,
+  // size of the image to be rendered
+  cellWidth: number,
+  cellHeight: number,
 ) => void;
 
 // Effects are called with CanvasRenderingContext2D before rendering, and
@@ -27,7 +29,8 @@ export type Effect = (
   // the rendering context to be modified
   ctx: CanvasRenderingContext2D,
   // size of the image to be rendered
-  width: number, height: number,
+  width: number,
+  height: number,
 ) => void;
 
 // WebGLEffect loads and configures a WebGLProgram, which is then used to effect
@@ -39,6 +42,6 @@ export type WebGLEffect = (
 ) => WebGLProgram;
 
 // Gradient is a list of colorstops
-export type ColorStop = { color: string, pos: number };
+export type ColorStop = { color: string; pos: number };
 
 export type Easing = (x: number) => number;
