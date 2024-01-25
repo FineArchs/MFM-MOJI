@@ -26,9 +26,9 @@ jobs:
           git config --global user.email "cicada1003@gmail.com"
           git config --global user.name "FineArchs"
           git add .
-          git commit -m'prettier $BASE_BRANCH'
-          git branch -m 'prettier/$BASE_BRANCH'
-          git push -f -u origin 'prettier/$BASE_BRANCH'
+          git commit -m"prettier $BASE_BRANCH"
+          git branch -m "prettier/$BASE_BRANCH"
+          git push -f -u origin "prettier/$BASE_BRANCH"
           if [ $(gh pr list --json id -B $BASE_BRANCH -s open) == '[]' ]
           then
             gh pr create --base $BASE_BRANCH --fill --label bot
