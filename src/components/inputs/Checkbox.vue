@@ -5,41 +5,50 @@ import RadioCheck from "../icons/RadioCheck.vue";
 
 export default defineComponent({
   components: {
-    Check, RadioCheck,
+    Check,
+    RadioCheck,
   },
   props: {
     modelValue: { type: undefined, required: true },
     value: { type: undefined, default: null },
     name: { type: String, default: "" },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   computed: {
     selected(): boolean {
-      if (typeof this.modelValue === "boolean") { // toggle
+      if (typeof this.modelValue === "boolean") {
+        // toggle
         return this.modelValue;
-      } else if (Array.isArray(this.modelValue)) { // multiple
+      } else if (Array.isArray(this.modelValue)) {
+        // multiple
         return this.modelValue.findIndex((item) => item === this.value) !== -1;
-      } else { // radio
+      } else {
+        // radio
         return this.modelValue === this.value;
       }
     },
     isRadio(): boolean {
-      return typeof this.modelValue !== "boolean" && !Array.isArray(this.modelValue);
+      return (
+        typeof this.modelValue !== "boolean" && !Array.isArray(this.modelValue)
+      );
     },
   },
   methods: {
     toggle() {
-      if (typeof this.modelValue === "boolean") { // toggle
+      if (typeof this.modelValue === "boolean") {
+        // toggle
         this.$emit("update:modelValue", !this.modelValue);
-      } else if (!Array.isArray(this.modelValue)) { // radio
+      } else if (!Array.isArray(this.modelValue)) {
+        // radio
         this.$emit("update:modelValue", this.value);
-      } else if (this.selected) { // multiple (selected)
-        this.$emit("update:modelValue", this.modelValue.filter((item: unknown) => (
-          item !== this.value
-        )));
-      } else { // multiple (not selected)
+      } else if (this.selected) {
+        // multiple (selected)
+        this.$emit(
+          "update:modelValue",
+          this.modelValue.filter((item: unknown) => item !== this.value),
+        );
+      } else {
+        // multiple (not selected)
         this.$emit("update:modelValue", [...this.modelValue, this.value]);
       }
     },

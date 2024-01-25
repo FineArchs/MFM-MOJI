@@ -7,15 +7,17 @@ export const prepareDownloadFile = (images: Blob[][]): Promise<Blob> => {
     return Promise.resolve(images[0][0]);
   } else {
     const zip = new Zip();
-    images.forEach((row, i) => row.forEach((cell, j) => {
-      zip.file(`${i + 1}-${j + 1}.${extension(cell)}`, cell);
-    }));
+    images.forEach((row, i) =>
+      row.forEach((cell, j) => {
+        zip.file(`${i + 1}-${j + 1}.${extension(cell)}`, cell);
+      }),
+    );
     return zip.generateAsync({ type: "blob" });
   }
 };
 
 /* Load a local file via specified path and call-back with the BlobURL. */
-export const loadFileAsBlobURL = (file: File): Promise<string> => (
+export const loadFileAsBlobURL = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -26,5 +28,4 @@ export const loadFileAsBlobURL = (file: File): Promise<string> => (
       }
     };
     reader.readAsDataURL(file);
-  })
-);
+  });

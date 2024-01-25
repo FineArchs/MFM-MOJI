@@ -9,7 +9,7 @@ const effectYatta: Effect = (keyframe, ctx, cellWidth, cellHeight) => {
   ctx.translate(cellWidth / 2, cellHeight / 2);
   ctx.rotate(0.1);
   ctx.translate(-cellWidth / 2, -cellHeight / 2);
-  ctx.translate(0, cellHeight / 16 * Math.sin(8 * Math.PI * keyframe));
+  ctx.translate(0, (cellHeight / 16) * Math.sin(8 * Math.PI * keyframe));
 };
 
 export default effectYatta;

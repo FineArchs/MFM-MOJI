@@ -1,4 +1,11 @@
-import { ComponentPublicInstance, Fragment, Comment, VNodeChild, createTextVNode, VNode } from "vue";
+import {
+  ComponentPublicInstance,
+  Fragment,
+  Comment,
+  VNodeChild,
+  createTextVNode,
+  VNode,
+} from "vue";
 
 function flatten(nodes: VNodeChild[]): VNode[] {
   return nodes.reduce((arr: VNode[], node: VNodeChild) => {
@@ -21,7 +28,10 @@ function flatten(nodes: VNodeChild[]): VNode[] {
   }, []);
 }
 
-export function children(component: ComponentPublicInstance, slotName = "default"): VNode[] {
+export function children(
+  component: ComponentPublicInstance,
+  slotName = "default",
+): VNode[] {
   const slot = component.$slots[slotName];
   return slot ? flatten(slot()) : [];
 }

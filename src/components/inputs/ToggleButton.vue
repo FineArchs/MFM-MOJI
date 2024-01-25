@@ -8,16 +8,17 @@ export default defineComponent({
     name: { type: String, default: "" },
     size: { type: String, default: "default" },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   computed: {
     selected(): boolean {
-      if (typeof this.modelValue === "boolean") { // toggle
+      if (typeof this.modelValue === "boolean") {
+        // toggle
         return this.modelValue;
-      } else if (Array.isArray(this.modelValue)) { // multiple
+      } else if (Array.isArray(this.modelValue)) {
+        // multiple
         return this.modelValue.findIndex((item) => item === this.value) !== -1;
-      } else { // radio
+      } else {
+        // radio
         return this.modelValue === this.value;
       }
     },
@@ -27,15 +28,20 @@ export default defineComponent({
   },
   methods: {
     toggle() {
-      if (typeof this.modelValue === "boolean") { // toggle
+      if (typeof this.modelValue === "boolean") {
+        // toggle
         this.$emit("update:modelValue", !this.modelValue);
-      } else if (!Array.isArray(this.modelValue)) { // radio
+      } else if (!Array.isArray(this.modelValue)) {
+        // radio
         this.$emit("update:modelValue", this.value);
-      } else if (this.selected) { // multiple (selected)
-        this.$emit("update:modelValue", this.modelValue.filter((item: unknown) => (
-          item !== this.value
-        )));
-      } else { // multiple (not selected)
+      } else if (this.selected) {
+        // multiple (selected)
+        this.$emit(
+          "update:modelValue",
+          this.modelValue.filter((item: unknown) => item !== this.value),
+        );
+      } else {
+        // multiple (not selected)
         this.$emit("update:modelValue", [...this.modelValue, this.value]);
       }
     },

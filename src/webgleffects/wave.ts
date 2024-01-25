@@ -1,5 +1,9 @@
 import { WebGLEffect } from "../types";
-import { webglEffectShader, webglLoadEffectShader, webglSetFloat } from "../utils/webgl";
+import {
+  webglEffectShader,
+  webglLoadEffectShader,
+  webglSetFloat,
+} from "../utils/webgl";
 import shaderWave from "../shaders/wave.glsl";
 
 const shader = webglEffectShader(shaderWave.sourceCode);

@@ -10,7 +10,7 @@ export default defineComponent({
 
 <template>
   <div v-for="(row, i) in images" :key="i" class="result-raw">
-    <img v-for="(col, j) in row" :key="j" class="result-cell" :src="col">
+    <img v-for="(col, j) in row" :key="j" class="result-cell" :src="col" />
   </div>
 </template>
 

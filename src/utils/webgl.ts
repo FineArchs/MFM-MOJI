@@ -13,7 +13,7 @@ export function webglInitialize(): boolean {
   try {
     gl = webglCanvas.getContext("experimental-webgl", {
       premultipliedAlpha: false,
-    }) as (WebGLRenderingContext | null);
+    }) as WebGLRenderingContext | null;
     if (!gl) {
       throw new Error("Failed to get webgl rendering context.");
     }
@@ -28,14 +28,14 @@ export function webglInitialize(): boolean {
 
   const vertices = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, vertices);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-    -1, -1, 0, 1,
-    1, -1, 1, 1,
-    -1, 1, 0, 0,
-    -1, 1, 0, 0,
-    1, -1, 1, 1,
-    1, 1, 1, 0,
-  ]), gl.STATIC_DRAW);
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
+    new Float32Array([
+      -1, -1, 0, 1, 1, -1, 1, 1, -1, 1, 0, 0, -1, 1, 0, 0, 1, -1, 1, 1, 1, 1, 1,
+      0,
+    ]),
+    gl.STATIC_DRAW,
+  );
 
   return !!webglCanvas;
 }
@@ -50,7 +50,9 @@ function webglRawShader(source: string, isVertex?: boolean): RawShader {
     if (shader) {
       return shader;
     } else {
-      shader = gl.createShader(isVertex ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER) as WebGLShader;
+      shader = gl.createShader(
+        isVertex ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER,
+      ) as WebGLShader;
       gl.shaderSource(shader, source);
       gl.compileShader(shader);
       if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
@@ -67,7 +69,8 @@ function webglLoadRawShader(rawShader: RawShader): WebGLShader {
   return rawShader();
 }
 
-const identityVertexShader = webglRawShader(`
+const identityVertexShader = webglRawShader(
+  `
   precision highp float;
   attribute vec2 pos;
   attribute vec2 uv;
@@ -78,7 +81,9 @@ const identityVertexShader = webglRawShader(`
     vUv = uv;
     gl_Position = vec4(pos.x, -pos.y*flipY, 0.0, 1.);
   }
-`, true);
+`,
+  true,
+);
 
 // create and initialize program
 export function webglEffectShader(fragmentShader: string): EffectShader {
@@ -114,36 +119,66 @@ export function webglEffectShader(fragmentShader: string): EffectShader {
   };
 }
 
-export function webglLoadEffectShader(effectShader: EffectShader): WebGLProgram {
+export function webglLoadEffectShader(
+  effectShader: EffectShader,
+): WebGLProgram {
   return effectShader();
 }
 
 // set uniform
-export function webglSetFloat(program: WebGLProgram, varName: string, value: number): void {
+export function webglSetFloat(
+  program: WebGLProgram,
+  varName: string,
+  value: number,
+): void {
   if (!gl) throw new Error("WebGL not initialized");
   gl.uniform1f(gl.getUniformLocation(program, varName), value);
 }
-export function webglSetVec2(program: WebGLProgram, varName: string, value: number[]): void {
+export function webglSetVec2(
+  program: WebGLProgram,
+  varName: string,
+  value: number[],
+): void {
   if (!gl) throw new Error("WebGL not initialized");
   gl.uniform2fv(gl.getUniformLocation(program, varName), value);
 }
-export function webglSetVec3(program: WebGLProgram, varName: string, value: number[]): void {
+export function webglSetVec3(
+  program: WebGLProgram,
+  varName: string,
+  value: number[],
+): void {
   if (!gl) throw new Error("WebGL not initialized");
   gl.uniform3fv(gl.getUniformLocation(program, varName), value);
 }
-export function webglSetVec4(program: WebGLProgram, varName: string, value: number[]): void {
+export function webglSetVec4(
+  program: WebGLProgram,
+  varName: string,
+  value: number[],
+): void {
   if (!gl) throw new Error("WebGL not initialized");
   gl.uniform4fv(gl.getUniformLocation(program, varName), value);
 }
-export function webglSetMat2(program: WebGLProgram, varName: string, value: number[]): void {
+export function webglSetMat2(
+  program: WebGLProgram,
+  varName: string,
+  value: number[],
+): void {
   if (!gl) throw new Error("WebGL not initialized");
   gl.uniformMatrix2fv(gl.getUniformLocation(program, varName), false, value);
 }
-export function webglSetMat3(program: WebGLProgram, varName: string, value: number[]): void {
+export function webglSetMat3(
+  program: WebGLProgram,
+  varName: string,
+  value: number[],
+): void {
   if (!gl) throw new Error("WebGL not initialized");
   gl.uniformMatrix3fv(gl.getUniformLocation(program, varName), false, value);
 }
-export function webglSetMat4(program: WebGLProgram, varName: string, value: number[]): void {
+export function webglSetMat4(
+  program: WebGLProgram,
+  varName: string,
+  value: number[],
+): void {
   if (!gl) throw new Error("WebGL not initialized");
   gl.uniformMatrix4fv(gl.getUniformLocation(program, varName), false, value);
 }
@@ -161,7 +196,10 @@ function webglTexture() {
   return texture;
 }
 
-type FrameBufferWithTexture = { frame: WebGLFramebuffer, texture: WebGLTexture };
+type FrameBufferWithTexture = {
+  frame: WebGLFramebuffer;
+  texture: WebGLTexture;
+};
 
 // create, initialize and bind a frame buffer (with texture)
 function webglFrameBuffer(w: number, h: number): FrameBufferWithTexture {
@@ -170,8 +208,24 @@ function webglFrameBuffer(w: number, h: number): FrameBufferWithTexture {
   const frame = gl.createFramebuffer() as WebGLFramebuffer;
   gl.bindFramebuffer(gl.FRAMEBUFFER, frame);
   const texture = webglTexture();
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
-  gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    w,
+    h,
+    0,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    null,
+  );
+  gl.framebufferTexture2D(
+    gl.FRAMEBUFFER,
+    gl.COLOR_ATTACHMENT0,
+    gl.TEXTURE_2D,
+    texture,
+    0,
+  );
   return { frame, texture };
 }
 

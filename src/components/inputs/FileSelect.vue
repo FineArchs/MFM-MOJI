@@ -7,23 +7,22 @@ import File from "../icons/File.vue";
 
 export default defineComponent({
   components: {
-    Button, File,
+    Button,
+    File,
   },
   props: {
     label: { type: String, default: undefined },
     type: { type: String, required: true },
     name: { type: String, default: "" },
   },
-  emits: [
-    "load",
-  ],
+  emits: ["load"],
   data() {
     return {
       file: null as File | null,
     };
   },
   computed: {
-    accept(): (string | null) {
+    accept(): string | null {
       if (this.type === "img") {
         return "image/*";
       } else if (this.type === "font") {
@@ -56,13 +55,17 @@ export default defineComponent({
 </script>
 
 <template>
-  <input ref="input" type="file" style="display: none;" :accept="accept" @change="onChange">
+  <input
+    ref="input"
+    type="file"
+    style="display: none"
+    :accept="accept"
+    @change="onChange"
+  />
   <Button type="dashed" :name="name" @click="onClick">
     <slot />
   </Button>
-  <div v-if="file" class="file">
-    <File /> {{ file.name }}
-  </div>
+  <div v-if="file" class="file"><File /> {{ file.name }}</div>
 </template>
 
 <style scoped>

@@ -14,7 +14,15 @@ const Template = (args) => ({
 });
 
 export const Base = Template.bind({});
-Base.args = { modelValue: ["#000000", "darker"], baseColor: "#ff0000", showDetails: false };
+Base.args = {
+  modelValue: ["#000000", "darker"],
+  baseColor: "#ff0000",
+  showDetails: false,
+};
 
 export const Details = Template.bind({});
-Details.args = { modelValue: ["#000000", "darker"], baseColor: "#ff0000", showDetails: true };
+Details.args = {
+  modelValue: ["#000000", "darker"],
+  baseColor: "#ff0000",
+  showDetails: true,
+};

@@ -13,15 +13,18 @@ import empty from "../../parts/void.svg";
 
 export default defineComponent({
   components: {
-    ToggleButton, TabButton, TabGroup, Fieldset, Card, Space,
+    ToggleButton,
+    TabButton,
+    TabGroup,
+    Fieldset,
+    Card,
+    Space,
   },
   props: {
     show: { type: Boolean, required: true },
     emojiSize: { type: Number, default: null },
   },
-  emits: [
-    "render",
-  ],
+  emits: ["render"],
   data() {
     return {
       parts,
@@ -66,23 +69,25 @@ export default defineComponent({
       <Space vertical large>
         <TabGroup>
           <TabButton
-              v-for="category in parts.categories"
-              :key="category.value"
-              v-model="tab"
-              :name="category.label"
-              :value="category.value">
+            v-for="category in parts.categories"
+            :key="category.value"
+            v-model="tab"
+            :name="category.label"
+            :value="category.value"
+          >
             {{ category.label }}
           </TabButton>
         </TabGroup>
         <Space small>
           <ToggleButton
-              v-for="p in parts[tab]"
-              :key="p"
-              v-model="conf[tab]"
-              name="パーツ"
-              size="part"
-              :value="p">
-            <img class="img" :src="p">
+            v-for="p in parts[tab]"
+            :key="p"
+            v-model="conf[tab]"
+            name="パーツ"
+            size="part"
+            :value="p"
+          >
+            <img class="img" :src="p" />
           </ToggleButton>
         </Space>
       </Space>

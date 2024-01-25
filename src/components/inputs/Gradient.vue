@@ -9,15 +9,15 @@ import { nearestIndex } from "../../utils/array";
 
 export default defineComponent({
   components: {
-    ColorPopover, Button, Delete,
+    ColorPopover,
+    Button,
+    Delete,
   },
   props: {
     modelValue: { type: Array as PropType<ColorStop[]>, required: true },
     baseColor: { type: String, required: true },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   data: () => ({
     moveHandler: null as ((e: PointerEvent) => void) | null,
     upHandler: null as ((e?: PointerEvent) => void) | null,
@@ -36,9 +36,11 @@ export default defineComponent({
       if (this.absColorStop.length === 1) {
         return this.absColorStop[0].color;
       }
-      const colorstops = this.absColorStop.slice(0).sort((a, b) => (
-        a.pos - b.pos
-      )).map((colorStop) => `${colorStop.color} ${colorStop.pos}%`).join(",");
+      const colorstops = this.absColorStop
+        .slice(0)
+        .sort((a, b) => a.pos - b.pos)
+        .map((colorStop) => `${colorStop.color} ${colorStop.pos}%`)
+        .join(",");
       return `linear-gradient(to right, ${colorstops})`;
     },
   },
@@ -52,37 +54,54 @@ export default defineComponent({
   },
   methods: {
     updatePos(newPos: number): void {
-      this.$emit("update:modelValue", this.modelValue.map((colorStop, ix) => ({
-        pos: ix === this.dragTarget ? newPos : colorStop.pos,
-        color: colorStop.color,
-      })));
+      this.$emit(
+        "update:modelValue",
+        this.modelValue.map((colorStop, ix) => ({
+          pos: ix === this.dragTarget ? newPos : colorStop.pos,
+          color: colorStop.color,
+        })),
+      );
       (this.$refs.popover as ColorPopover).refreshStyle();
     },
     updateColor(newColor: string): void {
-      this.$emit("update:modelValue", this.modelValue.map((colorStop, ix) => ({
-        pos: colorStop.pos,
-        color: ix === this.colorPickerTarget ? newColor : colorStop.color,
-      })));
+      this.$emit(
+        "update:modelValue",
+        this.modelValue.map((colorStop, ix) => ({
+          pos: colorStop.pos,
+          color: ix === this.colorPickerTarget ? newColor : colorStop.color,
+        })),
+      );
     },
     deleteColorStop(): void {
-      this.$emit("update:modelValue", this.modelValue.filter((_, ix) => (
-        this.colorPickerTarget !== ix
-      )));
+      this.$emit(
+        "update:modelValue",
+        this.modelValue.filter((_, ix) => this.colorPickerTarget !== ix),
+      );
       this.colorPickerTarget = null;
     },
     addColorStop(evt: PointerEvent): void {
-      const rect = (this.$refs.container as HTMLDivElement).getBoundingClientRect();
-      const pos = (evt.clientX - rect.left) / rect.width * 100;
-      this.$emit("update:modelValue", [...this.modelValue, { pos, color: "identical" }]);
+      const rect = (
+        this.$refs.container as HTMLDivElement
+      ).getBoundingClientRect();
+      const pos = ((evt.clientX - rect.left) / rect.width) * 100;
+      this.$emit("update:modelValue", [
+        ...this.modelValue,
+        { pos, color: "identical" },
+      ]);
     },
     startDrag(evt: PointerEvent): void {
       if (this.moveHandler) return;
-      const rect = (this.$refs.container as HTMLDivElement).getBoundingClientRect();
-      const startPos = (evt.clientX - rect.left) / rect.width * 100;
-      this.dragTarget = nearestIndex(this.modelValue.map((cs) => cs.pos), startPos);
+      const rect = (
+        this.$refs.container as HTMLDivElement
+      ).getBoundingClientRect();
+      const startPos = ((evt.clientX - rect.left) / rect.width) * 100;
+      this.dragTarget = nearestIndex(
+        this.modelValue.map((cs) => cs.pos),
+        startPos,
+      );
       this.colorPickerTarget = this.dragTarget;
       this.moveHandler = (e: PointerEvent) => {
-        const pos = (e.clientX - rect.left) / rect.width * 100;
+        const pos = ((e.clientX - rect.left) / rect.width) * 100;
         const clamped = Math.min(100, Math.max(0, Math.round(pos)));
         this.updatePos(clamped);
         e.preventDefault();
@@ -108,7 +127,9 @@ export default defineComponent({
       this.moveHandler(evt);
     },
     setKnobRef(ix: number) {
-      return (el: Element) => { this.knobRefs[ix] = el; };
+      return (el: Element) => {
+        this.knobRefs[ix] = el;
+      };
     },
     onHide(): void {
       this.colorPickerTarget = null;
@@ -122,28 +143,31 @@ export default defineComponent({
     <div ref="container" class="container">
       <div class="rail" @click="addColorStop" />
       <div
-          v-for="(colorStop, ix) in absColorStop"
-          :ref="setKnobRef(ix)"
-          :key="ix"
-          class="knob"
-          :style="{ left: `${colorStop.pos}%` }"
-          @pointerdown="startDrag($event)">
+        v-for="(colorStop, ix) in absColorStop"
+        :ref="setKnobRef(ix)"
+        :key="ix"
+        class="knob"
+        :style="{ left: `${colorStop.pos}%` }"
+        @pointerdown="startDrag($event)"
+      >
         <div
-            :class="['knob-icon', { active: dragTarget === ix }]"
-            :style="{ background: colorStop.color }" />
+          :class="['knob-icon', { active: dragTarget === ix }]"
+          :style="{ background: colorStop.color }"
+        />
       </div>
     </div>
   </div>
   <ColorPopover
-      ref="popover"
-      :show="colorPickerTarget != null"
-      :el="colorPickerTarget != null ? knobRefs[colorPickerTarget] : null"
-      :on-hide="onHide"
-      :model-value="colorPickerTarget != null ? absColorStop[colorPickerTarget].color : ''"
-      @update:model-value="updateColor($event)">
-    <Button danger block @click="deleteColorStop">
-      <Delete /> 削除
-    </Button>
+    ref="popover"
+    :show="colorPickerTarget != null"
+    :el="colorPickerTarget != null ? knobRefs[colorPickerTarget] : null"
+    :on-hide="onHide"
+    :model-value="
+      colorPickerTarget != null ? absColorStop[colorPickerTarget].color : ''
+    "
+    @update:model-value="updateColor($event)"
+  >
+    <Button danger block @click="deleteColorStop"> <Delete /> 削除 </Button>
   </ColorPopover>
 </template>
 

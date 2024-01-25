@@ -1,7 +1,7 @@
 import { Effect } from "../types";
 
 const effectPoyonJump: Effect = (keyframe, ctx, cellWidth, cellHeight) => {
-  ctx.translate(0, -cellHeight / 6 * Math.sin(Math.PI * keyframe));
+  ctx.translate(0, (-cellHeight / 6) * Math.sin(Math.PI * keyframe));
 };
 
 const effectPoyonBounce: Effect = (keyframe, ctx, cellWidth, cellHeight) => {
@@ -11,8 +11,8 @@ const effectPoyonBounce: Effect = (keyframe, ctx, cellWidth, cellHeight) => {
     0,
     0,
     1 - ratio,
-    -ratio * cellWidth / 2,
-    ratio * cellHeight * 3 / 4,
+    (-ratio * cellWidth) / 2,
+    (ratio * cellHeight * 3) / 4,
   );
 };
 

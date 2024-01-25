@@ -12,12 +12,12 @@ const animationXile: Animation = (
   cellHeight,
 ) => {
   for (let i = 2; i >= 0; i -= 1) {
-    const x = (
-      Math.cos(Math.PI * 2 * (keyframe - i * 0.2)) * 0.3 * cellWidth / 2 + cellWidth / 4
-    );
-    const y = (
-      Math.sin(Math.PI * 2 * (keyframe - i * 0.2)) * 0.3 * cellHeight / 2 + cellHeight / 4
-    );
+    const x =
+      (Math.cos(Math.PI * 2 * (keyframe - i * 0.2)) * 0.3 * cellWidth) / 2 +
+      cellWidth / 4;
+    const y =
+      (Math.sin(Math.PI * 2 * (keyframe - i * 0.2)) * 0.3 * cellHeight) / 2 +
+      cellHeight / 4;
     ctx.drawImage(
       image,
       offsetH,
@@ -26,8 +26,8 @@ const animationXile: Animation = (
       height,
       x,
       y,
-      cellWidth / 2 * 0.8,
-      cellHeight / 2 * 0.8,
+      (cellWidth / 2) * 0.8,
+      (cellHeight / 2) * 0.8,
     );
   }
 };

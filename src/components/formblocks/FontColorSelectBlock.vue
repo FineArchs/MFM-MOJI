@@ -10,16 +10,19 @@ import fontcolors from "../../constants/fontcolors";
 
 export default defineComponent({
   components: {
-    ToggleButton, ColorSample, Color, Space, Fieldset, GradientBlock,
+    ToggleButton,
+    ColorSample,
+    Color,
+    Space,
+    Fieldset,
+    GradientBlock,
   },
   props: {
     modelValue: { type: String, required: true },
     gradient: { type: Array, required: true },
     showDetails: { type: Boolean, required: true },
   },
-  emits: [
-    "update:modelValue", "update:gradient",
-  ],
+  emits: ["update:modelValue", "update:gradient"],
   data() {
     return {
       fontcolors,
@@ -34,28 +37,31 @@ export default defineComponent({
       <Space v-if="!showDetails" small vertical>
         <Space v-for="row in fontcolors" :key="row[0]" small>
           <ToggleButton
-              v-for="color in row"
-              :key="color"
-              size="smallIcon"
-              name="文字色"
-              :model-value="modelValue"
-              :value="color"
-              @update:model-value="$emit('update:modelValue', $event)">
+            v-for="color in row"
+            :key="color"
+            size="smallIcon"
+            name="文字色"
+            :model-value="modelValue"
+            :value="color"
+            @update:model-value="$emit('update:modelValue', $event)"
+          >
             <ColorSample :color="color" />
           </ToggleButton>
         </Space>
       </Space>
       <Color
-          v-else
-          block
-          name="文字色"
-          :model-value="modelValue"
-          @update:model-value="$emit('update:modelValue', $event)" />
+        v-else
+        block
+        name="文字色"
+        :model-value="modelValue"
+        @update:model-value="$emit('update:modelValue', $event)"
+      />
       <GradientBlock
-          :show-details="showDetails"
-          :model-value="gradient"
-          :base-color="modelValue"
-          @update:model-value="$emit('update:gradient', $event)" />
+        :show-details="showDetails"
+        :model-value="gradient"
+        :base-color="modelValue"
+        @update:model-value="$emit('update:gradient', $event)"
+      />
     </Space>
   </Fieldset>
 </template>

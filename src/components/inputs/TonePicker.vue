@@ -6,9 +6,7 @@ export default defineComponent({
   props: {
     modelValue: { type: Object as PropType<HSV>, required: true },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   data: () => ({
     moveHandler: null as ((e: PointerEvent) => void) | null,
     upHandler: null as (() => void) | null,
@@ -26,7 +24,9 @@ export default defineComponent({
   methods: {
     startDrag(evt: PointerEvent): void {
       if (this.moveHandler) return;
-      const rect = (this.$refs.container as HTMLDivElement).getBoundingClientRect();
+      const rect = (
+        this.$refs.container as HTMLDivElement
+      ).getBoundingClientRect();
       this.moveHandler = (e: PointerEvent) => {
         const white = (e.clientX - rect.left) / rect.width;
         const black = 1 - (e.clientY - rect.top) / rect.height;
@@ -58,12 +58,22 @@ export default defineComponent({
 
 <template>
   <div
-      class="tone-picker"
-      :style="{ '--jsValueH': modelValue.s / 100, '--jsValueV': 1 - modelValue.v / 100 }">
+    class="tone-picker"
+    :style="{
+      '--jsValueH': modelValue.s / 100,
+      '--jsValueV': 1 - modelValue.v / 100,
+    }"
+  >
     <div ref="container" class="container" @pointerdown="startDrag($event)">
       <div class="layer" :style="{ background: baseColor }" />
-      <div class="layer" :style="{ background: `linear-gradient(90deg, white, transparent)` }" />
-      <div class="layer" :style="{ background: `linear-gradient(0deg, black, transparent)` }" />
+      <div
+        class="layer"
+        :style="{ background: `linear-gradient(90deg, white, transparent)` }"
+      />
+      <div
+        class="layer"
+        :style="{ background: `linear-gradient(0deg, black, transparent)` }"
+      />
       <div :class="['knob', { active: !!moveHandler }]" />
     </div>
   </div>
