@@ -4,20 +4,8 @@ module.exports = {
     "stylelint-config-html/vue",
   ],
   rules: {
-
-    // stylelint-config-primer dropped these rules from v11
-    indentation: 2,
-    "string-quotes": "double",
-    "value-list-comma-newline-after": "always-multi-line",
-
-    // do not require newlines for inline styles
-    "declaration-block-semicolon-newline-after": null,
-
     // do not force using short/long notation for hex colors
     "color-hex-length": null,
-
-    // allow aligning property values
-    "declaration-colon-space-after": null,
 
     // allow factoring properties with empty lines
     "custom-property-empty-line-before": null,
