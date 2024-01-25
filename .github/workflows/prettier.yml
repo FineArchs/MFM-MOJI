@@ -19,7 +19,9 @@ jobs:
           key: node_modules-${{ hashFiles('package-lock.json') }}-18
       - run: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
+      - run: npx prettier --check src
       - run: npm run prettier
+        if: ${{ failure() }}
       - name: Create or Update PR
         run: |
           BASE_BRANCH=$( git rev-parse --abbrev-ref HEAD )
