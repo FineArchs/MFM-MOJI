@@ -11,6 +11,7 @@
     "fix:js": "eslint --fix '**/*.{js,ts,vue}'",
     "test": "npm run test:e2e",
     "test:e2e": "playwright test",
+    "prettier": "prettier . --write",
     "storybook": "storybook dev -p 6006"
   },
   "browserslist": [
@@ -54,6 +55,7 @@
     "eslint-plugin-vue": "^9.19.2",
     "postcss": "8.x",
     "postcss-html": "1.x",
+    "prettier": "^3.2.4",
     "ssim.js": "^3.5.0",
     "storybook": "^7.6.6",
     "stylelint": "^16.2.0",
