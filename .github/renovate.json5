@@ -9,9 +9,6 @@
   ],
   packageRules: [
     {
-      major: {
-        enabled: true,
-      },
       groupName: 'stylelint',
       matchPackagePatterns: '.*stylelint.*',
     },
