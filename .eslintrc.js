@@ -7,12 +7,8 @@ module.exports = {
       webpack: { config: "webpack.config.js" },
     },
   },
-  extends: ["airbnb-base", "plugin:compat/recommended", "plugin:storybook/recommended"],
+  extends: ["airbnb-base", "plugin:compat/recommended", "plugin:storybook/recommended", "prettier"],
   rules: {
-    // basic style modifications
-    indent: ["error", 2, { SwitchCase: 1 }],
-    quotes: ["error", "double"],
-
     // redundant "else" can help readablity
     "no-else-return": "off",
 
@@ -117,20 +113,9 @@ module.exports = {
       extends: [
         "plugin:vue/vue3-recommended",
         "plugin:@typescript-eslint/recommended",
+        "prettier",
       ],
       rules: {
-        // vue template styles
-        "vue/html-indent": ["error", 2, {
-          attribute: 2,
-          baseIndent: 1,
-          alignAttributesVertically: true,
-        }],
-
-        "vue/html-closing-bracket-newline": ["error", {
-          singleline: "never",
-          multiline: "never",
-        }],
-
         // non-null assertion is allowed as long as we are sure that it's non-null
         "@typescript-eslint/no-non-null-assertion": "off",
 
