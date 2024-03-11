@@ -35,7 +35,7 @@
     "@storybook/addon-essentials": "^7.6.6",
     "@storybook/cli": "^7.6.6",
     "@storybook/vue3": "^7.6.6",
-    "@storybook/vue3-webpack5": "^7.6.6",
+    "@storybook/vue3-webpack5": "^8.0.0",
     "@types/color-convert": "^2.0.0",
     "@types/css-font-loading-module": "^0.0.12",
     "@types/file-saver": "^2.0.3",
