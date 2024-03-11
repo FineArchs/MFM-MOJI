@@ -33,7 +33,7 @@
     "@primer/css": "21.x",
     "@primer/stylelint-config": "^12.9.1",
     "@storybook/addon-essentials": "^7.6.6",
-    "@storybook/cli": "^7.6.6",
+    "@storybook/cli": "^8.0.0",
     "@storybook/vue3": "^7.6.6",
     "@storybook/vue3-webpack5": "^7.6.6",
     "@types/color-convert": "^2.0.0",
