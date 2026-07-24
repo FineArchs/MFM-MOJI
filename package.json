@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "@types/gtag.js": "^0.0.18",
-    "color-convert": "^2.0.1",
+    "color-convert": "^3.0.0",
     "file-saver": "^2.0.5",
     "filenamify": "^6.0.0",
     "gifenc": "mattdesl/gifenc#64842fca317b112a8590f8fef2bf3825da8f6fe3",
@@ -36,7 +36,7 @@
     "@storybook/cli": "^7.6.6",
     "@storybook/vue3": "^7.6.6",
     "@storybook/vue3-webpack5": "^7.6.6",
-    "@types/color-convert": "^2.0.0",
+    "@types/color-convert": "^3.0.0",
     "@types/css-font-loading-module": "^0.0.12",
     "@types/file-saver": "^2.0.3",
     "@types/google.analytics": "^0.0.45",
