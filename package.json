@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.28.1",
-    "@primer/css": "21.x",
+    "@primer/css": "22.x",
     "@primer/stylelint-config": "^12.9.1",
     "@storybook/addon-essentials": "^7.6.6",
     "@storybook/cli": "^7.6.6",
